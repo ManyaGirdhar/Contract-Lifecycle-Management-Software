@@ -1,0 +1,78 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-11 11:04:15.288983",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "contract",
+  "section_break_lcvq",
+  "version_no",
+  "column_break_smai",
+  "effective_date",
+  "section_break_atyb",
+  "change_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "version_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Version No.",
+   "reqd": 1
+  },
+  {
+   "fieldname": "change_log",
+   "fieldtype": "Text",
+   "label": "Change Log"
+  },
+  {
+   "fieldname": "effective_date",
+   "fieldtype": "Date",
+   "label": "Effective Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract",
+   "fieldtype": "Link",
+   "label": "Contract",
+   "options": "Contract"
+  },
+  {
+   "fieldname": "section_break_lcvq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_smai",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_atyb",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-11 11:06:36.429900",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Contract Version",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

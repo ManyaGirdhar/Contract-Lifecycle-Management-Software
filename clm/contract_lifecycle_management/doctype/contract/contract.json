@@ -1,0 +1,214 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-11 10:31:48.262943",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_av8v",
+  "amended_from",
+  "contract_type",
+  "title",
+  "description_optional",
+  "requester_details_section",
+  "requester_name",
+  "column_break_phts",
+  "requester_department",
+  "counterparty_details_section",
+  "counterparty_name",
+  "column_break_vfjk",
+  "counterparty_email",
+  "contract_period_details_section",
+  "contract_term",
+  "contract_effective_date",
+  "column_break_hovo",
+  "contract_duration",
+  "contract_end_date",
+  "section_break_ifnp",
+  "termination_notice_period",
+  "renewal_details_section",
+  "is_contract_renewable",
+  "financial_details_section",
+  "amount_to_receive",
+  "column_break_giar",
+  "tax"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_av8v",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Contract",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Contract Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description_optional",
+   "fieldtype": "Small Text",
+   "label": "Description (optional)"
+  },
+  {
+   "fieldname": "requester_name",
+   "fieldtype": "Data",
+   "label": "Requester Name"
+  },
+  {
+   "fieldname": "requester_department",
+   "fieldtype": "Data",
+   "label": "Requester Department"
+  },
+  {
+   "fieldname": "counterparty_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "CounterParty Name",
+   "options": "CounterParty"
+  },
+  {
+   "fetch_from": "counterparty_name.email",
+   "fieldname": "counterparty_email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "CounterParty Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "contract_term",
+   "fieldtype": "Select",
+   "label": "Contract Term",
+   "options": "Definite\nIndefinite",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_effective_date",
+   "fieldtype": "Date",
+   "label": "Contract Effective Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_duration",
+   "fieldtype": "Duration",
+   "label": "Contract Duration",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_end_date",
+   "fieldtype": "Date",
+   "label": "Contract End Date",
+   "read_only": 1
+  },
+  {
+   "description": "Days",
+   "fieldname": "termination_notice_period",
+   "fieldtype": "Int",
+   "label": "Termination Notice Period"
+  },
+  {
+   "fieldname": "renewal_details_section",
+   "fieldtype": "Section Break",
+   "label": "Renewal Details"
+  },
+  {
+   "fieldname": "is_contract_renewable",
+   "fieldtype": "Select",
+   "label": "Is Contract Renewable?",
+   "options": "Yes\nNo"
+  },
+  {
+   "fieldname": "financial_details_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Details"
+  },
+  {
+   "fieldname": "amount_to_receive",
+   "fieldtype": "Currency",
+   "label": "Amount to Receive"
+  },
+  {
+   "fieldname": "tax",
+   "fieldtype": "Percent",
+   "label": "Tax"
+  },
+  {
+   "fieldname": "requester_details_section",
+   "fieldtype": "Section Break",
+   "label": "Requester Details"
+  },
+  {
+   "fieldname": "column_break_phts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "counterparty_details_section",
+   "fieldtype": "Section Break",
+   "label": "CounterParty Details"
+  },
+  {
+   "fieldname": "column_break_vfjk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contract_period_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contract Period Details"
+  },
+  {
+   "fieldname": "column_break_hovo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ifnp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_giar",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-03-11 11:00:21.590466",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Contract",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
