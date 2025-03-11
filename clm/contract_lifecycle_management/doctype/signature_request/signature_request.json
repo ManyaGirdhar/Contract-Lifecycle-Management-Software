@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-03-11 11:07:01.513545",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_dnzg",
+  "contract_reference",
+  "column_break_qczg",
+  "counterparty",
+  "section_break_sbne",
+  "request_date",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "request_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Request Date",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "contract_reference.counterparty_name",
+   "fieldname": "counterparty",
+   "fieldtype": "Data",
+   "label": "CounterParty",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nSigned\nDeclined",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_reference",
+   "fieldtype": "Link",
+   "label": "Contract Reference",
+   "options": "Contract",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_dnzg",
+   "fieldtype": "Section Break",
+   "label": "Contract Details"
+  },
+  {
+   "fieldname": "column_break_qczg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_sbne",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-03-11 11:18:06.315646",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Signature Request",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Blue",
+   "title": "Pending"
+  },
+  {
+   "color": "Green",
+   "title": "Signed"
+  },
+  {
+   "color": "Red",
+   "title": "Declined"
+  }
+ ]
+}
