@@ -1,13 +1,14 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "naming_series:[naming_series]",
  "creation": "2025-03-11 11:01:11.712637",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "title",
   "column_break_yaov",
-  "category",
+  "naming_series",
   "section_break_nkxk",
   "content"
  ],
@@ -27,28 +28,29 @@
    "reqd": 1
   },
   {
-   "fieldname": "category",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Category",
-   "options": "General\nFinancial\nLegal\nConfidential\nOther",
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_yaov",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "section_break_nkxk",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "General\nFinancial\nLegal\nConfidential\nOther",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-11 11:03:09.364343",
+ "modified": "2025-03-12 15:38:21.083737",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Clause",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -60,6 +62,29 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Contract Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Requester Legal Team",
    "share": 1,
    "write": 1
   }
