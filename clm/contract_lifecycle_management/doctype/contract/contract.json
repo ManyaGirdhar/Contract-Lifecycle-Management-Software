@@ -188,10 +188,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-11 11:00:21.590466",
+ "modified": "2025-03-20 15:05:30.188384",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
