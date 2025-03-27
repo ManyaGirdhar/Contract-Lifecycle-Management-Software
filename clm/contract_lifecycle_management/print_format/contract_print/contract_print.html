@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ contract_type }} Agreement</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1, h2, h3 { text-align: center; }
+        p { line-height: 1.6; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        td, th { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        .section-title { margin-top: 30px; font-size: 18px; font-weight: bold; }
+        .signature-block { margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<h1>{{ contract_type }} Agreement</h1>
+<p><strong>Status:</strong> {{ status }}</p>
+<p><strong>Effective Date:</strong> {{ contract_effective_date }}</p>
+<p><strong>Contract End Date:</strong> {{ contract_end_date }}</p>
+
+<div class="section-title">1. Requester Details</div>
+<table>
+    <tr><th>Requester Name</th><td>{{ requester_name }}</td></tr>
+    <tr><th>Department</th><td>{{ requester_department }}</td></tr>
+</table>
+
+<div class="section-title">2. Counterparty Details</div>
+<table>
+    <tr><th>Counterparty Name</th><td>{{ counterparty_name }}</td></tr>
+    <tr><th>Email</th><td>{{ counterparty_email }}</td></tr>
+</table>
+
+<div class="section-title">3. Contract Period</div>
+<table>
+    <tr><th>Contract Term</th><td>{{ contract_term }}</td></tr>
+    <tr><th>Duration (months)</th><td>{{ contract_duration }}</td></tr>
+    <tr><th>Termination Notice Period (days)</th><td>{{ termination_notice_period }}</td></tr>
+</table>
+
+<div class="section-title">4. Renewal Details</div>
+<table>
+    <tr><th>Is Contract Renewable?</th><td>{{ is_contract_renewable }}</td></tr>
+</table>
+
+<div class="section-title">5. Financial Details</div>
+<table>
+    <tr><th>Amount to Receive</th><td>₹{{ amount_to_receive }}</td></tr>
+    <tr><th>Tax</th><td>{{ tax }}%</td></tr>
+    <tr><th>Total Amount</th><td>₹{{ total_amount }}</td></tr>
+</table>
+
+<div class="section-title">6. Contract Content</div>
+<p>{{ contract_content }}</p>
+
+<div class="signature-block">
+    <table>
+        <tr>
+            <th>Requester Signature</th>
+            <td>______________________________</td>
+        </tr>
+        <tr>
+            <th>Counterparty Signature</th>
+            <td>______________________________</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ contract_effective_date }}</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
