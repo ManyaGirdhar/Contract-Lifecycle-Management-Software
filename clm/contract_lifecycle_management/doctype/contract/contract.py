@@ -2,11 +2,11 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.model.document import Document
+from frappe.website.website_generator import WebsiteGenerator
 from frappe.utils import add_months
 
 
-class Contract(Document):
+class Contract(WebsiteGenerator):
 	def before_save(doc):
 		if doc.contract_effective_date and doc.contract_duration:
 			doc.contract_end_date = add_months(doc.contract_effective_date, doc.contract_duration)

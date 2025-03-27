@@ -2,73 +2,138 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ contract_type }} Agreement</title>
+    <title>{{ doc.name }} Agreement</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1, h2, h3 { text-align: center; }
-        p { line-height: 1.6; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        td, th { padding: 10px; border: 1px solid #ccc; text-align: left; }
-        .section-title { margin-top: 30px; font-size: 18px; font-weight: bold; }
-        .signature-block { margin-top: 50px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 10px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2980b9;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ddd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #2980b9;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        .signature-block {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .signature-block table {
+            width: 70%;
+            margin: 0 auto;
+            border: none;
+        }
+        .signature-block th {
+            text-align: center;
+            background: none;
+            color: #333;
+        }
+        .signature-line {
+            border-bottom: 1px solid #333;
+            width: 200px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
 <h1>{{ contract_type }} Agreement</h1>
-<p><strong>Status:</strong> {{ status }}</p>
-<p><strong>Effective Date:</strong> {{ contract_effective_date }}</p>
-<p><strong>Contract End Date:</strong> {{ contract_end_date }}</p>
+<p><strong>Status:</strong> {{ doc.status }}</p>
+<p><strong>Effective Date:</strong> {{ doc.contract_effective_date }}</p>
+<p><strong>Contract End Date:</strong> {{ doc.contract_end_date }}</p>
 
-<div class="section-title">1. Requester Details</div>
+<div class="section-title">1. Initiator Details</div>
 <table>
-    <tr><th>Requester Name</th><td>{{ requester_name }}</td></tr>
-    <tr><th>Department</th><td>{{ requester_department }}</td></tr>
+    <tr><th>Requester Name</th><td>{{ doc.requester_name }}</td></tr>
+    <tr><th>Department</th><td>{{ doc.requester_department }}</td></tr>
 </table>
 
-<div class="section-title">2. Counterparty Details</div>
+<div class="section-title">2. Other Party Information</div>
 <table>
-    <tr><th>Counterparty Name</th><td>{{ counterparty_name }}</td></tr>
-    <tr><th>Email</th><td>{{ counterparty_email }}</td></tr>
+    <tr><th>Counterparty Name</th><td>{{ doc.counterparty_name }}</td></tr>
+    <tr><th>Email</th><td>{{ doc.counterparty_email }}</td></tr>
 </table>
 
-<div class="section-title">3. Contract Period</div>
+<div class="section-title">3. Employment Duration</div>
 <table>
-    <tr><th>Contract Term</th><td>{{ contract_term }}</td></tr>
-    <tr><th>Duration (months)</th><td>{{ contract_duration }}</td></tr>
-    <tr><th>Termination Notice Period (days)</th><td>{{ termination_notice_period }}</td></tr>
+    <tr><th>Contract Term</th><td>{{ doc.contract_term }}</td></tr>
+    <tr><th>Duration (months)</th><td>{{ doc.contract_duration }}</td></tr>
+    <tr><th>Termination Notice Period (days)</th><td>{{ doc.termination_notice_period }}</td></tr>
 </table>
 
-<div class="section-title">4. Renewal Details</div>
+<div class="section-title">4. Extension & Renewal Terms</div>
 <table>
-    <tr><th>Is Contract Renewable?</th><td>{{ is_contract_renewable }}</td></tr>
+    <tr><th>Is Contract Renewable?</th><td>{{ doc.is_contract_renewable }}</td></tr>
 </table>
 
-<div class="section-title">5. Financial Details</div>
+<div class="section-title">5. Compensation & Taxation</div>
 <table>
-    <tr><th>Amount to Receive</th><td>₹{{ amount_to_receive }}</td></tr>
-    <tr><th>Tax</th><td>{{ tax }}%</td></tr>
-    <tr><th>Total Amount</th><td>₹{{ total_amount }}</td></tr>
+    <tr><th>Amount to Receive</th><td>₹{{ doc.amount_to_receive }}</td></tr>
+    <tr><th>Applicable Tax Rate</th><td>{{ doc.tax }}%</td></tr>
+    <tr><th>Gross Payable Amount</th><td>₹{{ doc.total_amount }}</td></tr>
 </table>
 
-<div class="section-title">6. Contract Content</div>
-<p>{{ contract_content }}</p>
+<div class="section-title">6. Agreement Terms & Conditions</div>
+<p>{{ doc.content }}</p>
 
 <div class="signature-block">
     <table>
         <tr>
             <th>Requester Signature</th>
-            <td>______________________________</td>
+            <td><span class="signature-line"></span></td>
         </tr>
         <tr>
             <th>Counterparty Signature</th>
-            <td>______________________________</td>
+            <td><span class="signature-line"></span></td>
         </tr>
         <tr>
             <th>Date</th>
-            <td>{{ contract_effective_date }}</td>
+            <td>{{ doc.contract_effective_date }}</td>
         </tr>
     </table>
+</div>
+
+<div class="footer">
+    <p>This agreement is confidential and legally binding.</p>
 </div>
 
 </body>
