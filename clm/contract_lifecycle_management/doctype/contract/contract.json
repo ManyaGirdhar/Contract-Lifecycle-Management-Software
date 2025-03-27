@@ -10,6 +10,8 @@
   "amended_from",
   "contract_type",
   "title",
+  "status",
+  "workflow_state",
   "description_optional",
   "requester_details_section",
   "requester_name",
@@ -33,7 +35,9 @@
   "amount_to_receive",
   "total_amount",
   "column_break_giar",
-  "tax"
+  "tax",
+  "contract_content_section",
+  "content"
  ],
  "fields": [
   {
@@ -193,16 +197,37 @@
    "fieldtype": "Currency",
    "label": "Total Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "contract_content_section",
+   "fieldtype": "Section Break",
+   "label": "Contract Content"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Text Editor",
+   "label": "Content"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nApproved\nRejected"
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Data",
+   "label": "Workflow State"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-13 10:55:23.901359",
+ "modified": "2025-03-26 16:02:23.271824",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
@@ -244,5 +269,18 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [
+  {
+   "color": "Light Blue",
+   "title": "Draft"
+  },
+  {
+   "color": "Green",
+   "title": "Approved"
+  },
+  {
+   "color": "Red",
+   "title": "Rejected"
+  }
+ ]
 }
