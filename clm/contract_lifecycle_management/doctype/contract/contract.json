@@ -1,7 +1,8 @@
 {
  "actions": [],
+ "allow_guest_to_view": 1,
  "allow_rename": 1,
- "autoname": "field:title",
+ "autoname": "format:{title}-{counterparty_name}-{###}",
  "creation": "2025-03-11 10:31:48.262943",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -37,7 +38,9 @@
   "column_break_giar",
   "tax",
   "contract_content_section",
-  "content"
+  "content",
+  "route",
+  "is_published"
  ],
  "fields": [
   {
@@ -218,12 +221,25 @@
    "fieldname": "workflow_state",
    "fieldtype": "Data",
    "label": "Workflow State"
+  },
+  {
+   "fieldname": "route",
+   "fieldtype": "Data",
+   "label": "Route"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_published",
+   "fieldtype": "Check",
+   "label": "Is Published?"
   }
  ],
+ "has_web_view": 1,
  "index_web_pages_for_search": 1,
+ "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-26 16:02:23.271824",
+ "modified": "2025-03-27 12:14:14.381468",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
@@ -267,6 +283,7 @@
    "write": 1
   }
  ],
+ "route": "contract-list",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [
