@@ -9,10 +9,19 @@
   "contract",
   "section_break_lcvq",
   "version_no",
+  "status",
+  "parent_version",
   "column_break_smai",
   "effective_date",
+  "created_by",
+  "created_on",
+  "approved_by",
   "section_break_atyb",
-  "change_log"
+  "change_log",
+  "redlining_section",
+  "previous_version",
+  "current_version",
+  "redlined_contract"
  ],
  "fields": [
   {
@@ -50,11 +59,60 @@
   {
    "fieldname": "section_break_atyb",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "redlining_section",
+   "fieldtype": "Section Break",
+   "label": "Redlining"
+  },
+  {
+   "fieldname": "previous_version",
+   "fieldtype": "Text Editor",
+   "label": "Previous Version"
+  },
+  {
+   "fieldname": "current_version",
+   "fieldtype": "Text Editor",
+   "label": "Current Version"
+  },
+  {
+   "fieldname": "redlined_contract",
+   "fieldtype": "HTML Editor",
+   "label": "Redlined Contract"
+  },
+  {
+   "fieldname": "created_by",
+   "fieldtype": "Link",
+   "label": "Created By",
+   "options": "User"
+  },
+  {
+   "fieldname": "created_on",
+   "fieldtype": "Datetime",
+   "label": "Created On"
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fetch_from": "contract.workflow_state",
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "label": "Status"
+  },
+  {
+   "fieldname": "parent_version",
+   "fieldtype": "Link",
+   "label": "Parent Version",
+   "options": "Contract Version"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-12 15:45:15.436670",
+ "modified": "2025-04-05 14:44:16.374220",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Version",
