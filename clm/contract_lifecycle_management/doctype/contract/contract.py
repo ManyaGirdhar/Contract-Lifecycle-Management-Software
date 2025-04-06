@@ -24,19 +24,27 @@ class Contract(WebsiteGenerator):
 	def after_insert(doc):
 		doc.create_initial_version()
 
-	def create_initial_version(doc):
+	# @staticmethod
+	def create_initial_version(self):
 		version = frappe.new_doc("Contract Version")
-		version.contract = doc.name
+		version.contract = self.name
 		version.version_no = "0"
-		version.effective_date = doc.contract_effective_date
+		version.effective_date = self.contract_effective_date
 		version.change_log = "Initial Version"
-		version.status = doc.workflow_state if hasattr(doc, "workflow_state") else "Draft"
+		version.status = self.workflow_state if hasattr(self, "workflow_state") else "Draft"
 		version.created_by = frappe.session.user
 		version.created_on = frappe.utils.now_datetime()
 		version.redlined_contract = "No redlining"
+		
 		version.insert(ignore_permissions=True)
 
+		frappe.db.set_value("Contract", self.name, "current_version", version.name)
+
 	def on_update(doc):
+		version = getattr(doc, "version_no", 0)
+		if not version or version == 0:
+			return
+
 		previous_versions = frappe.get_all(
 			"Contract Version",
 			filters={"contract": doc.name},
@@ -98,52 +106,52 @@ class Contract(WebsiteGenerator):
 
 @frappe.whitelist()
 def get_redlined_diff(prev_text, curr_text):
-    """Return a redlined inline diff with removed text in red and added text in green."""
-    def extract_text(html):
-        return BeautifulSoup(html, "html.parser").get_text()
+	"""Return a redlined inline diff with removed text in red and added text in green."""
+	def extract_text(html):
+		return BeautifulSoup(html, "html.parser").get_text()
 
-    def tokenize(text):
-        # Tokenizes words and punctuation separately
-        return re.findall(r'\w+|[^\w\s]', text, re.UNICODE)
+	def tokenize(text):
+		# Tokenizes words and punctuation separately
+		return re.findall(r'\w+|[^\w\s]', text, re.UNICODE)
 
-    prev_clean = extract_text(prev_text)
-    curr_clean = extract_text(curr_text)
+	prev_clean = extract_text(prev_text)
+	curr_clean = extract_text(curr_text)
 
-    prev_tokens = tokenize(prev_clean)
-    curr_tokens = tokenize(curr_clean)
+	prev_tokens = tokenize(prev_clean)
+	curr_tokens = tokenize(curr_clean)
 
-    matcher = difflib.SequenceMatcher(None, prev_tokens, curr_tokens)
-    result = []
+	matcher = difflib.SequenceMatcher(None, prev_tokens, curr_tokens)
+	result = []
 
-    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-        if tag == 'equal':
-            result.extend(curr_tokens[j1:j2])
-        elif tag == 'insert':
-            result.extend([f'<span style="color:green;">{t}</span>' for t in curr_tokens[j1:j2]])
-        elif tag == 'delete':
-            result.extend([f'<span style="color:red;text-decoration:line-through;">{t}</span>' for t in prev_tokens[i1:i2]])
-        elif tag == 'replace':
-            for old, new in zip(prev_tokens[i1:i2], curr_tokens[j1:j2]):
-                if old == new:
-                    result.append(old)
-                else:
-                    result.append(f'<span style="color:red;text-decoration:line-through;">{old}</span>')
-                    result.append(f'<span style="color:green;">{new}</span>')
-            # Handle token count mismatch
-            if len(prev_tokens[i1:i2]) > len(curr_tokens[j1:j2]):
-                result.extend([f'<span style="color:red;text-decoration:line-through;">{t}</span>' for t in prev_tokens[i1 + len(curr_tokens[j1:j2]):i2]])
-            elif len(curr_tokens[j1:j2]) > len(prev_tokens[i1:i2]):
-                result.extend([f'<span style="color:green;">{t}</span>' for t in curr_tokens[j1 + len(prev_tokens[i1:i2]):j2]])
+	for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+		if tag == 'equal':
+			result.extend(curr_tokens[j1:j2])
+		elif tag == 'insert':
+			result.extend([f'<span style="color:green;">{t}</span>' for t in curr_tokens[j1:j2]])
+		elif tag == 'delete':
+			result.extend([f'<span style="color:red;text-decoration:line-through;">{t}</span>' for t in prev_tokens[i1:i2]])
+		elif tag == 'replace':
+			for old, new in zip(prev_tokens[i1:i2], curr_tokens[j1:j2]):
+				if old == new:
+					result.append(old)
+				else:
+					result.append(f'<span style="color:red;text-decoration:line-through;">{old}</span>')
+					result.append(f'<span style="color:green;">{new}</span>')
+			# Handle token count mismatch
+			if len(prev_tokens[i1:i2]) > len(curr_tokens[j1:j2]):
+				result.extend([f'<span style="color:red;text-decoration:line-through;">{t}</span>' for t in prev_tokens[i1 + len(curr_tokens[j1:j2]):i2]])
+			elif len(curr_tokens[j1:j2]) > len(prev_tokens[i1:i2]):
+				result.extend([f'<span style="color:green;">{t}</span>' for t in curr_tokens[j1 + len(prev_tokens[i1:i2]):j2]])
 
-    # Join result with smart spacing
-    final_html = ''
-    for i, token in enumerate(result):
-        if i > 0 and not re.match(r'[.,!?;:]', token) and not token.startswith('<'):
-            final_html += ' '
-        final_html += token
+	# Join result with smart spacing
+	final_html = ''
+	for i, token in enumerate(result):
+		if i > 0 and not re.match(r'[.,!?;:]', token) and not token.startswith('<'):
+			final_html += ' '
+		final_html += token
 
-    return f"""
-    <div style="font-family:monospace;font-size:14px;line-height:1.5;white-space:pre-wrap;">
-        {final_html}
-    </div>
-    """
+	return f"""
+	<div style="font-family:monospace;font-size:14px;line-height:1.5;white-space:pre-wrap;">
+		{final_html}
+	</div>
+	"""
