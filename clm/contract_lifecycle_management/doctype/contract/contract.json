@@ -13,6 +13,8 @@
   "title",
   "status",
   "workflow_state",
+  "column_break_lrpk",
+  "current_version",
   "description_optional",
   "requester_details_section",
   "requester_name",
@@ -256,6 +258,16 @@
    "fieldname": "recipient_id",
    "fieldtype": "Data",
    "label": "Recipient ID"
+  },
+  {
+   "fieldname": "current_version",
+   "fieldtype": "Link",
+   "label": "Current Version",
+   "options": "Contract Version"
+  },
+  {
+   "fieldname": "column_break_lrpk",
+   "fieldtype": "Column Break"
   }
  ],
  "has_web_view": 1,
@@ -263,7 +275,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-01 10:54:05.351031",
+ "modified": "2025-04-05 11:44:45.928205",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",

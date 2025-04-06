@@ -54,8 +54,84 @@ frappe.ui.form.on('Contract', {
                 });
             }
         });
+
+        // Show Redline Comparison Dropdown Dialog
+        if (frm.doc.current_version && frm.doc.__unsaved !== 1) {
+            frm.add_custom_button("Compare Versions", () => {
+                const d = new frappe.ui.Dialog({
+                    title: 'Compare Contract Versions',
+                    fields: [
+                        {
+                            label: 'Version 1',
+                            fieldname: 'version1',
+                            fieldtype: 'Link',
+                            options: 'Contract Version',
+                            reqd: 1
+                        },
+                        {
+                            label: 'Version 2',
+                            fieldname: 'version2',
+                            fieldtype: 'Link',
+                            options: 'Contract Version',
+                            reqd: 1
+                        }
+                    ],
+                    primary_action_label: 'Compare',
+                    primary_action(values) {
+                        if (values.version1 && values.version2) {
+                            // Fetch Version 1 content
+                            frappe.call({
+                                method: "frappe.client.get_value",
+                                args: {
+                                    doctype: "Contract Version",
+                                    filters: { name: values.version1 },
+                                    fieldname: "current_version"
+                                },
+                                callback: function (res1) {
+                                    // Fetch Version 2 content
+                                    frappe.call({
+                                        method: "frappe.client.get_value",
+                                        args: {
+                                            doctype: "Contract Version",
+                                            filters: { name: values.version2 },
+                                            fieldname: "current_version"
+                                        },
+                                        callback: function (res2) {
+                                            // Now compare the fetched versions
+                                            frappe.call({
+                                                method: "clm.contract_lifecycle_management.doctype.contract.contract.get_redlined_diff",
+                                                args: {
+                                                    prev_text: res1.message.current_version || "",
+                                                    curr_text: res2.message.current_version || ""
+                                                },
+                                                callback: function(r) {
+                                                    if (r.message) {
+                                                        frappe.msgprint({
+                                                            title: __('Redlined Comparison'),
+                                                            indicator: 'blue',
+                                                            message: `<div style="max-height: 400px; overflow-y: auto;">${r.message}</div>`
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+
+                            d.hide(); 
+                        } else {
+                            frappe.msgprint(__('Please select both versions to compare.'));
+                        }
+                    }
+                });
+
+                d.show(); 
+            });
+        }
     }
 });
+
 
 
 function calculate_end_date(frm) {
