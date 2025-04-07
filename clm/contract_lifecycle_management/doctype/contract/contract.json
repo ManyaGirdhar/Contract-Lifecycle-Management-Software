@@ -87,19 +87,22 @@
   {
    "fieldname": "requester_name",
    "fieldtype": "Data",
-   "label": "Requester Name"
+   "label": "Requester Name",
+   "reqd": 1
   },
   {
    "fieldname": "requester_department",
    "fieldtype": "Data",
-   "label": "Requester Department"
+   "label": "Requester Department",
+   "reqd": 1
   },
   {
    "fieldname": "counterparty_name",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "CounterParty Name",
-   "options": "CounterParty"
+   "options": "CounterParty",
+   "reqd": 1
   },
   {
    "fetch_from": "counterparty_name.email",
@@ -215,7 +218,8 @@
   {
    "fieldname": "content",
    "fieldtype": "Text Editor",
-   "label": "Content"
+   "label": "Content",
+   "reqd": 1
   },
   {
    "fieldname": "status",
@@ -247,23 +251,27 @@
   {
    "fieldname": "document_id",
    "fieldtype": "Data",
-   "label": "Document ID"
+   "label": "Document ID",
+   "read_only": 1
   },
   {
    "fieldname": "upload_url",
    "fieldtype": "Long Text",
-   "label": "Upload URL"
+   "label": "Upload URL",
+   "read_only": 1
   },
   {
    "fieldname": "recipient_id",
    "fieldtype": "Data",
-   "label": "Recipient ID"
+   "label": "Recipient ID",
+   "read_only": 1
   },
   {
    "fieldname": "current_version",
    "fieldtype": "Link",
    "label": "Current Version",
-   "options": "Contract Version"
+   "options": "Contract Version",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_lrpk",
@@ -275,7 +283,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-05 11:44:45.928205",
+ "modified": "2025-04-07 13:00:08.875080",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
