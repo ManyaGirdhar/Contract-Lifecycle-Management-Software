@@ -31,6 +31,7 @@ class Contract(WebsiteGenerator):
 		version.version_no = "0"
 		version.effective_date = self.contract_effective_date
 		version.change_log = "Initial Version"
+		version.current_version = self.content
 		version.status = self.workflow_state if hasattr(self, "workflow_state") else "Draft"
 		version.created_by = frappe.session.user
 		version.created_on = frappe.utils.now_datetime()
@@ -41,10 +42,18 @@ class Contract(WebsiteGenerator):
 		frappe.db.set_value("Contract", self.name, "current_version", version.name)
 
 	def on_update(doc):
-		version = getattr(doc, "version_no", 0)
-		if not version or version == 0:
-			return
+		# version = getattr(doc, "version_no", 0)
+		# if not version or version == 0:
+		# 	return
 
+		if frappe.flags.in_insert:
+			return
+		
+		previous_doc = doc.get_doc_before_save()
+		
+		if not previous_doc:
+			return  # No previous version to compare 
+			
 		previous_versions = frappe.get_all(
 			"Contract Version",
 			filters={"contract": doc.name},
@@ -57,7 +66,7 @@ class Contract(WebsiteGenerator):
 		new_version_no = str(int(latest_version.version_no) + 1) if latest_version else "1"
 		
 		# Get previous doc state before save
-		previous_doc = doc.get_doc_before_save()
+		# previous_doc = doc.get_doc_before_save()
 
 		# Identify changed fields
 		changed_fields = []

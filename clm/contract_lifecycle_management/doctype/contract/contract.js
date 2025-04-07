@@ -18,6 +18,11 @@ frappe.ui.form.on('Contract', {
         calculate_total(frm);
     },
 
+    after_save: function(frm) {
+        console.log("after_save triggered!");
+        frm.reload_doc();  // Refreshes the form without full page reload
+    },
+
     refresh: function(frm) {
         console.log("Refresh event triggered for Contract form"); // Debugging
 
