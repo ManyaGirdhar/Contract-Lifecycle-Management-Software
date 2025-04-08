@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-04-06 12:57:50.301492",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_0wlr",
+  "amended_from",
+  "contract_type",
+  "title",
+  "contract_duration",
+  "requester_type",
+  "requester_name",
+  "requester_email",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_0wlr",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Contract Request",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Contract Type",
+   "options": "Fixed Term\nPermanent\nFreelancer\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_duration",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Contract Duration (in months)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "requester_email",
+   "fieldtype": "Data",
+   "label": "Requester Email",
+   "options": "Email",
+   "read_only": 1
+  },
+  {
+   "fieldname": "requester_name",
+   "fieldtype": "Data",
+   "label": "Requester Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "read_only": 1
+  },
+  {
+   "fieldname": "requester_type",
+   "fieldtype": "Select",
+   "label": "Requester Type",
+   "options": "Individual\nOrganization"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-04-07 11:13:20.304084",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Contract Request",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CounterParty",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
