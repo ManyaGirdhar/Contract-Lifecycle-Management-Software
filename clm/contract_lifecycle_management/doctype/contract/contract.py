@@ -160,7 +160,7 @@ def get_redlined_diff(prev_text, curr_text):
 		final_html += token
 
 	return f"""
-	<div style="font-family:monospace;font-size:14px;line-height:1.5;white-space:pre-wrap;">
+	<div style="font-family:monospace;font-size:14px;line-height:1.5;">
 		{final_html}
 	</div>
 	"""
