@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/CLM/frontend/ && yarn copy-html-entry",
+    "build": "vite build --base=/assets/clm/frontend/ && yarn copy-html-entry",
     "preview": "vite preview",
-    "copy-html-entry": "cp ../CLM/public/frontend/index.html ../CLM/www/frontend.html"
+    "copy-html-entry": "cp ../clm/public/frontend/index.html ../clm/www/frontend.html"
   },
   "dependencies": {
     "feather-icons": "^4.29.2",
