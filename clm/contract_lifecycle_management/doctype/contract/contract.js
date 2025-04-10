@@ -124,6 +124,21 @@ frappe.ui.form.on('Contract', {
                         }
                     }
                 });
+                    // Set filters for version1 and version2 fields
+                d.fields_dict.version1.get_query = function() {
+                    return {
+                        filters: {
+                            contract: frm.doc.name
+                        }
+                    };
+                };
+                d.fields_dict.version2.get_query = function() {
+                    return {
+                        filters: {
+                            contract: frm.doc.name
+                        }
+                    };
+                };
 
                 d.show(); 
             });

@@ -7,33 +7,37 @@
  "engine": "InnoDB",
  "field_order": [
   "counterparty_details_section",
-  "name1",
   "organization",
-  "column_break_qnpy",
-  "department",
-  "role",
   "legal_team_details_section",
-  "legal_team_phone_no",
+  "member_name",
+  "member_phone_no",
   "column_break_bgzr",
-  "legal_team_email",
+  "member_email",
+  "negotiator_details_section",
+  "negotiator_name",
+  "negotiator_phone_no",
+  "column_break_xsei",
+  "negotiator_email",
+  "role_copy",
   "contact_details_section",
+  "name1",
   "phone_no",
   "column_break_sryo",
-  "email"
+  "email",
+  "role"
  ],
  "fields": [
   {
    "fieldname": "name1",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "CounterParty Name ",
+   "label": "Signee Name ",
    "reqd": 1
   },
   {
    "fieldname": "phone_no",
    "fieldtype": "Phone",
-   "label": "Phone No. ",
-   "reqd": 1
+   "label": "Phone No. "
   },
   {
    "fieldname": "email",
@@ -45,25 +49,13 @@
   {
    "fieldname": "organization",
    "fieldtype": "Data",
-   "label": "Organization",
+   "label": "Organization/Individual Name",
    "reqd": 1
   },
   {
    "fieldname": "role",
    "fieldtype": "Data",
-   "label": "Role",
-   "reqd": 1
-  },
-  {
-   "depends_on": "eval:doc.role == 'Employee'",
-   "fieldname": "department",
-   "fieldtype": "Data",
-   "label": "Department",
-   "mandatory_depends_on": "eval:doc.role == 'Employee'"
-  },
-  {
-   "fieldname": "column_break_qnpy",
-   "fieldtype": "Column Break"
+   "label": "Role"
   },
   {
    "fieldname": "contact_details_section",
@@ -82,28 +74,66 @@
   {
    "fieldname": "legal_team_details_section",
    "fieldtype": "Section Break",
-   "label": "Legal Team Details"
-  },
-  {
-   "fieldname": "legal_team_phone_no",
-   "fieldtype": "Phone",
-   "label": "Legal Team Phone No.",
-   "reqd": 1
+   "label": "Legal Team Member Details"
   },
   {
    "fieldname": "column_break_bgzr",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "legal_team_email",
+   "fieldname": "member_name",
    "fieldtype": "Data",
-   "label": "Legal Team Email",
+   "label": "Member Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "member_phone_no",
+   "fieldtype": "Phone",
+   "label": "Member Phone No."
+  },
+  {
+   "fieldname": "negotiator_details_section",
+   "fieldtype": "Section Break",
+   "label": "Negotiator Details"
+  },
+  {
+   "fieldname": "negotiator_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Negotiator Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "negotiator_phone_no",
+   "fieldtype": "Phone",
+   "label": "Negotiator Phone No."
+  },
+  {
+   "fieldname": "column_break_xsei",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "role_copy",
+   "fieldtype": "Data",
+   "label": "Negotiator Role"
+  },
+  {
+   "fieldname": "member_email",
+   "fieldtype": "Data",
+   "label": "Member Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "negotiator_email",
+   "fieldtype": "Data",
+   "label": "Negotiator Email",
+   "options": "Email",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-03-11 12:18:34.921720",
+ "modified": "2025-04-09 18:29:07.000247",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "CounterParty",

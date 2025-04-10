@@ -283,7 +283,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-07 13:00:08.875080",
+ "modified": "2025-04-09 12:36:33.586598",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
@@ -323,6 +323,28 @@
    "read": 1,
    "report": 1,
    "role": "Requester Legal Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CounterParty",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CounterParty Legal Team",
    "share": 1,
    "write": 1
   }

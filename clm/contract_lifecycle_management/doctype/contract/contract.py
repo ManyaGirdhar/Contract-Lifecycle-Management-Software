@@ -5,7 +5,7 @@ import re
 import frappe
 import difflib
 from bs4 import BeautifulSoup
-from frappe.utils import add_months
+from frappe.utils import add_months, nowdate, get_datetime_str, get_date_str
 from frappe.website.website_generator import WebsiteGenerator
 
 
@@ -42,10 +42,6 @@ class Contract(WebsiteGenerator):
 		frappe.db.set_value("Contract", self.name, "current_version", version.name)
 
 	def on_update(doc):
-		# version = getattr(doc, "version_no", 0)
-		# if not version or version == 0:
-		# 	return
-
 		if frappe.flags.in_insert:
 			return
 		
@@ -64,11 +60,7 @@ class Contract(WebsiteGenerator):
 
 		latest_version = previous_versions[0] if previous_versions else None
 		new_version_no = str(int(latest_version.version_no) + 1) if latest_version else "1"
-		
-		# Get previous doc state before save
-		# previous_doc = doc.get_doc_before_save()
 
-		# Identify changed fields
 		changed_fields = []
 		if previous_doc:
 			for field in doc.meta.fields:
@@ -77,9 +69,14 @@ class Contract(WebsiteGenerator):
 					continue
 				old = previous_doc.get(fieldname)
 				new = doc.get(fieldname)
+
+				# Normalize date fields
+				if field.fieldtype in ["Date", "Datetime"]:
+					old = get_date_str(old) if field.fieldtype == "Date" else get_datetime_str(old)
+					new = get_date_str(new) if field.fieldtype == "Date" else get_datetime_str(new)
+
 				if old != new:
 					changed_fields.append(field.label or fieldname)
-
 		change_log = (
 			"Updated to version " + new_version_no +
 			(f" | Fields changed: {', '.join(changed_fields)}" if changed_fields else "")
@@ -152,7 +149,6 @@ def get_redlined_diff(prev_text, curr_text):
 			elif len(curr_tokens[j1:j2]) > len(prev_tokens[i1:i2]):
 				result.extend([f'<span style="color:green;">{t}</span>' for t in curr_tokens[j1 + len(prev_tokens[i1:i2]):j2]])
 
-	# Join result with smart spacing
 	final_html = ''
 	for i, token in enumerate(result):
 		if i > 0 and not re.match(r'[.,!?;:]', token) and not token.startswith('<'):
@@ -164,3 +160,25 @@ def get_redlined_diff(prev_text, curr_text):
 		{final_html}
 	</div>
 	"""
+
+@frappe.whitelist()
+def update_expired_contracts():
+    today = nowdate()
+    
+    # Fetch contracts where end_date < today and current workflow state is not 'Expired'
+    contracts = frappe.get_all("Contract", 
+        filters={
+            "contract_end_date": ["<", today],
+            "workflow_state": ["!=", "Expired"]
+        },
+        fields=["name", "workflow_state"]
+    )
+
+    for contract in contracts:
+        try:
+            doc = frappe.get_doc("Contract", contract.name)
+            doc.workflow_state = "Expired"  # Make sure this is a valid state in your workflow
+            doc.save()
+            frappe.db.commit()
+        except Exception as e:
+            frappe.log_error(f"Failed to update workflow for Contract {contract.name}: {str(e)}")

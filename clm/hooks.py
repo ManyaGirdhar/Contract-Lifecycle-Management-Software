@@ -148,13 +148,14 @@ app_include_js = "/assets/clm/js/clm.js"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"clm.tasks.all"
 # 	],
-# 	"daily": [
-# 		"clm.tasks.daily"
-# 	],
+	"daily": [
+		# "clm.tasks.daily"
+        "clm.contract_lifecycle_management.doctype.contract.contract.def update_expired_contracts"
+	],
 # 	"hourly": [
 # 		"clm.tasks.hourly"
 # 	],
@@ -164,7 +165,7 @@ app_include_js = "/assets/clm/js/clm.js"
 # 	"monthly": [
 # 		"clm.tasks.monthly"
 # 	],
-# }
+}
 
 # Testing
 # -------
@@ -242,3 +243,5 @@ app_include_js = "/assets/clm/js/clm.js"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
