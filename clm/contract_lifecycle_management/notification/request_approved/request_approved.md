@@ -1,0 +1,172 @@
+<p><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contract Approval Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f9f9f9;
+    }</p>
+
+<pre><code>h2 {
+  color: #333;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 30px 0;
+  padding: 30px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 55px;
+  left: 10%;
+  right: 10%;
+  height: 4px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.phase {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  min-width: 100px;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 auto 10px auto;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+  position: relative;
+}
+
+.phase span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+
+.current .circle {
+  background-color: #007bff;
+}
+
+.current span {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.email-body {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 30px;
+}
+
+.email-body h4 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.email-body ul {
+  margin: 10px 0 20px 20px;
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.attachment {
+  background: #eef;
+  border-left: 4px solid #007bff;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+</code></pre>
+
+<p></style>
+</head>
+<body></p>
+
+<p><h2>📄 Contract Phase Timeline</h2>
+  <div class="timeline">
+    <div class="phase current">
+      <div class="circle">1</div>
+      <span>Request Approved</span>
+    </div>
+    <div class="phase">
+      <div class="circle">2</div>
+      <span>Draft</span>
+    </div>
+    <div class="phase">
+      <div class="circle">3</div>
+      <span>In Negotiation</span>
+    </div>
+    <div class="phase">
+      <div class="circle">4</div>
+      <span>Awaiting Signature</span>
+    </div>
+    <div class="phase">
+      <div class="circle">5</div>
+      <span>Final Approval</span>
+    </div>
+    <div class="phase">
+      <div class="circle">6</div>
+      <span>Active</span>
+    </div>
+    <div class="phase">
+      <div class="circle">7</div>
+      <span>Expired</span>
+    </div>
+  </div></p>
+
+<p><div class="email-body">
+<p>Dear [Counterparty Name],</p>
+
+    <p>I hope this message finds you well.</p>
+
+    <p>We are pleased to inform you that your contract request titled "<strong>[Contract Title]</strong>" has been approved. Thank you for submitting the necessary details and documentation.</p>
+
+    <h4>Next Steps:</h4>
+    <ul>
+      <li>A Contract Manager from our team will now initiate the contract creation process based on the details you provided.</li>
+      <li>Once the contract is created, you will be contacted for the negotiation phase, where terms and clauses can be reviewed collaboratively.</li>
+      <li>If you have any specific preferences or clauses you'd like us to consider during this phase, feel free to share them in advance.</li>
+    </ul>
+
+    <p>Please feel free to reach out in case of any questions.</p>
+
+    <p>
+  Warm regards,&lt;br&gt;
+  [Your Name]&lt;br&gt;
+  [Your Designation]&lt;br&gt;
+  [Company Name]&lt;br&gt;
+  [Email] | [Phone]
+</p>
+
+
+</body>
+</html>
