@@ -72,8 +72,10 @@ class Contract(WebsiteGenerator):
 
 				# Normalize date fields
 				if field.fieldtype in ["Date", "Datetime"]:
-					old = get_date_str(old) if field.fieldtype == "Date" else get_datetime_str(old)
-					new = get_date_str(new) if field.fieldtype == "Date" else get_datetime_str(new)
+					if old:
+						old = get_date_str(old) if field.fieldtype == "Date" else get_datetime_str(old)
+					if new:
+						new = get_date_str(new) if field.fieldtype == "Date" else get_datetime_str(new)
 
 				if old != new:
 					changed_fields.append(field.label or fieldname)
@@ -182,3 +184,14 @@ def update_expired_contracts():
             frappe.db.commit()
         except Exception as e:
             frappe.log_error(f"Failed to update workflow for Contract {contract.name}: {str(e)}")
+
+@frappe.whitelist()
+def get_contract_template(contract_type):
+    template = frappe.db.get_value('Contract Content', {'contract_type': contract_type}, 'content')
+    
+    # If using a Long Text field (in case of legacy data)
+    # Ensure it's not escaping HTML tags in case of legacy Long Text field
+    if template:
+        template = frappe.utils.cstr(template)  # Converts to string without escaping HTML
+    
+    return template

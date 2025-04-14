@@ -108,8 +108,6 @@
   </style>
 </head>
 <body>
-
-  <h2>📄 Contract Phase Timeline</h2>
   <div class="timeline">
     <div class="phase current">
       <div class="circle">1</div>
@@ -159,7 +157,7 @@
 
     <p>
       Warm regards,<br>
-      {{frappe.utils.get_fullname(frappe.session.user)}}<br>
+      {{frappe.get_doc("User", frappe.session.user).full_name}}<br>
       Contract Manager<br>
       {{frappe.session.user}}<br>
       Sent via SMARTContract
