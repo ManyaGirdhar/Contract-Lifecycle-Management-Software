@@ -8,10 +8,17 @@
         <label class="block mb-2 text-sm font-semibold text-gray-700">Contract Type</label>
         <select v-model="contract.contract_type" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option disabled value="">Select contract type</option>
-          <option>Fixed Term</option>
-          <option>Permanent</option>
-          <option>Freelancer</option>
-          <option>Other</option>
+          <option>Select</option>
+          <option>Employment Contract</option>
+          <option>Business & Commercial Contract</option>
+          <option>Service Contract</option>
+          <option>Real Estate Contract</option>
+          <option>Financial Contract</option>
+          <option>Confidentiality & Non-Disclosure Contract</option>
+          <option>Sales & Marketing Contract</option>
+          <option>Intellectual Property Contract</option>
+          <option>Investment & Partnership Contract</option>
+          <option>Legal & Government Contract</option>
         </select>
       </div>
 

@@ -10,10 +10,12 @@
   "contract_type",
   "title",
   "contract_duration",
+  "description",
+  "requester_details_section",
   "requester_type",
-  "requester_name",
   "requester_email",
-  "description"
+  "column_break_fteb",
+  "requester_name"
  ],
  "fields": [
   {
@@ -35,7 +37,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Contract Type",
-   "options": "Fixed Term\nPermanent\nFreelancer\nOther",
+   "options": "Select\nEmployment Contract\nBusiness & Commercial Contract\nService Contract\nReal Estate Contract\nFinancial Contract\nConfidentiality & Non-Disclosure Contract\nSales & Marketing Contract\nIntellectual Property Contract\nInvestment & Partnership Contract\nLegal & Government Contract",
    "reqd": 1
   },
   {
@@ -76,12 +78,21 @@
    "fieldtype": "Select",
    "label": "Requester Type",
    "options": "Individual\nOrganization"
+  },
+  {
+   "fieldname": "requester_details_section",
+   "fieldtype": "Section Break",
+   "label": "Requester Details"
+  },
+  {
+   "fieldname": "column_break_fteb",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-09 17:43:57.411311",
+ "modified": "2025-04-14 23:49:10.232736",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Request",

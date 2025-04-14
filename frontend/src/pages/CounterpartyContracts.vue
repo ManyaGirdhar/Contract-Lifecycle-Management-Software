@@ -101,7 +101,7 @@
                     const data = await response.json();
   
                     const allowedStates = [
-                        "In Negotiation",
+                        "In negotiation",
                         "Legal Review",
                         "Modified",
                         "Final Approval",
