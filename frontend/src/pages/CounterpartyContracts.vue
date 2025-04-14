@@ -11,12 +11,15 @@
                         placeholder="🔍 Search"
                         class="px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500"
                     />
-                    <button
-                        @click="goToRequestForm"
-                        class="bg-blue-600 text-white text-sm px-3 py-1.5 rounded-md border-blue-700 shadow-sm hover:bg-blue-700 transition-all"
+                    <Button
+                    size="xl"
+                    theme="primary"
+                    class="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#264e36] text-white hover:bg-[#2f5f44]"
+                    @click="requestContract"
                     >
-                        Request Contract
-                    </button>
+                    Request Contract
+                    </Button>
+
                 </div>
             </div>
   
@@ -98,7 +101,7 @@
                     const data = await response.json();
   
                     const allowedStates = [
-                        "In negotiation",
+                        "In Negotiation",
                         "Legal Review",
                         "Modified",
                         "Final Approval",
