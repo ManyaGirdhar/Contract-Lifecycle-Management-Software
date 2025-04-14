@@ -6,12 +6,21 @@
                     {{ contract.title || 'Contract Title' }}
                 </h1>
 
-                <button v-if="['Legal Review', 'In negotiation'].includes(contract.workflow_state)"
-                    class="absolute top-0 right-0 px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
-                    @click="updateWorkflowState('Final Approval')">
-                    Approve
-                </button>
+                <div class="absolute top-0 right-0 flex gap-2">
+                    <button v-if="contract.workflow_state === 'In negotiation'"
+                        class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition"
+                        @click="updateWorkflowState('Send to Legal')">
+                        Send for Legal Review
+                    </button>
+
+                    <button v-if="['Legal Review', 'In negotiation'].includes(contract.workflow_state)"
+                        class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
+                        @click="updateWorkflowState('Final Approval')">
+                        Approve
+                    </button>
+                </div>
             </div>
+
 
             <h1 v-else class="text-3xl font-bold text-gray-800 mb-4 text-center">
                 Loading...
@@ -19,7 +28,10 @@
 
             <div v-if="contract">
                 <p class="text-gray-600 mt-2"><strong>Status:</strong> {{ contract.workflow_state }}</p>
-                <p class="text-gray-600 mt-2"><strong>Content:</strong> {{ contract.content || 'No details available.' }}</p>
+                <div class="text-gray-600 mt-2">
+                    <strong>Content:</strong>
+                    <div v-html="contract.content || 'No details available.'" class="prose max-w-none mt-1"></div>
+                </div>
 
                 <div class="mt-6 flex flex-wrap gap-4">
                     <button v-if="contract.workflow_state === 'Modified'"

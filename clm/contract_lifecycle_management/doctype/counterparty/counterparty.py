@@ -21,19 +21,19 @@ class CounterParty(Document):
             user.insert(ignore_permissions=True)
 
         # Create or update user for Negotiator
-        if self.negotiator_email:
-            if not frappe.db.exists("User", self.negotiator_email):
+        if self.requester_email:
+            if not frappe.db.exists("User", self.requester_email):
                 user = frappe.get_doc({
                     "doctype": "User",
-                    "email": self.negotiator_email,
-                    "first_name": self.negotiator_name,
-                    "phone": self.negotiator_phone_no or "",
+                    "email": self.requester_email,
+                    "first_name": self.organization,
+                    "phone": self.requester_phone_no or "",
                     "roles": [{"role": "Counterparty"}],
                     "user_type": "Website User"
                 })
                 user.insert(ignore_permissions=True)
             else:
-                user = frappe.get_doc("User", self.negotiator_email)
+                user = frappe.get_doc("User", self.requester_email)
                 if not any(r.role == "Counterparty" for r in user.roles):
                     user.append("roles", {"role": "Counterparty"})
                     user.save(ignore_permissions=True)
