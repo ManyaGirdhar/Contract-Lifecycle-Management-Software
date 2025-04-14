@@ -1,0 +1,80 @@
+{
+ "charts": [
+  {
+   "chart_name": "Contracts",
+   "label": "Contracts created per Month"
+  },
+  {
+   "chart_name": "Contract Requests",
+   "label": "Contract requests received per Month"
+  }
+ ],
+ "content": "[{\"id\":\"_NWfVZpRyu\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h1\\\">Contract Manager Workspace</span>\",\"col\":12}},{\"id\":\"yG_OtUVckP\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"IQYOIqRL40\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Contracts created per Month\",\"col\":12}},{\"id\":\"JX9XrU2k7C\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"mBvWNd3mPJ\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Contract requests received per Month\",\"col\":12}},{\"id\":\"E8wEwitIGl\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"95tkY8OstV\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Contracts By Status</span>\",\"col\":12}},{\"id\":\"r0aKOPdmUs\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Draft\",\"col\":3}},{\"id\":\"32Yc2p3aG1\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Negotiated\",\"col\":3}},{\"id\":\"FfjRzyUkW5\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Signed\",\"col\":3}},{\"id\":\"QstSq5DEUn\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Active\",\"col\":3}},{\"id\":\"Bw37-ALDOf\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Expired\",\"col\":3}},{\"id\":\"8gO3OML8of\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"YKIFlaviuS\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Contract Requests\",\"col\":4}},{\"id\":\"FbnuBgBqfS\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Contracts\",\"col\":4}},{\"id\":\"LDkeUkbhAQ\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Contract's Versions\",\"col\":4}}]",
+ "creation": "2025-04-06 13:06:48.148760",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "milestone",
+ "idx": 0,
+ "indicator_color": "purple",
+ "is_hidden": 0,
+ "label": "Contract Manager Workspace",
+ "links": [],
+ "modified": "2025-04-14 11:57:38.301733",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Contract Manager Workspace",
+ "number_cards": [
+  {
+   "label": "Active",
+   "number_card_name": "Active"
+  },
+  {
+   "label": "Expired",
+   "number_card_name": "Expired"
+  },
+  {
+   "label": "Negotiated",
+   "number_card_name": "Negotiated"
+  },
+  {
+   "label": "Signed",
+   "number_card_name": "Awaiting Signature"
+  },
+  {
+   "label": "Draft",
+   "number_card_name": "Draft"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [
+  {
+   "document_type": "Contract Request",
+   "label": "Contract Requests",
+   "quick_list_filter": "[]"
+  },
+  {
+   "document_type": "Contract",
+   "label": "Contracts",
+   "quick_list_filter": "[]"
+  },
+  {
+   "document_type": "Contract Version",
+   "label": "Contract's Versions",
+   "quick_list_filter": "[]"
+  }
+ ],
+ "restrict_to_domain": "",
+ "roles": [
+  {
+   "role": "Contract Manager"
+  }
+ ],
+ "sequence_id": 28.0,
+ "shortcuts": [],
+ "title": "Contract Manager Workspace"
+}
