@@ -8,7 +8,7 @@
   
         <template v-if="!isLoggedIn">
           <RouterLink to="/account/login" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#b2f5cb]">Login</RouterLink>
-          <a href="http://clm.localhost:8005/register" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#b2f5cb]">Register</a>
+          <a href="https://three-korecent.frappe.cloud/register" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#b2f5cb]">Register</a>
         </template>
   
         <template v-else>

@@ -1,86 +1,92 @@
 frappe.ready(() => {
-    const style = document.createElement("style");
+    const style = document.createElement('style');
     style.innerHTML = `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
         body {
-            background: #eafaf1 !important; /* Soft pastel green */
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: oklch(98.7% 0.026 102.212);
+            color: #f8fafc;
         }
 
-        .web-form-container {
-            max-width: 700px;
+        .web-form-wrapper {
+            max-width: 720px;
             margin: 40px auto;
-            background: #ffffff;
-            padding: 40px 30px;
+            background: #264e36;
+            padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 0.5s ease-in-out;
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        .web-form-container h1, 
-        .web-form-container h2 {
-            color: #4caf50; /* Soft green */
-            text-align: center;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .web-form-container p {
-            color: #4e5d52;
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .web-form .form-group {
-            margin-bottom: 20px;
-        }
-
-        .web-form label {
-            font-weight: 600;
-        
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .web-form input.form-control, 
-        .web-form select.form-control, 
-        .web-form textarea.form-control {
-            border-radius: 10px;
-            padding: 12px 14px;
-            border: 1px solid #c8e6c9;
-            background: #f1fdf4;
-            transition: all 0.3s ease;
-        }
-
-        .web-form input.form-control:focus, 
-        .web-form select.form-control:focus, 
-        .web-form textarea.form-control:focus {
-            border-color: #81c784;
-            background: #ffffff;
-            box-shadow: 0 0 0 2px rgba(129,199,132,0.15);
-        }
-
-        .web-form .btn-primary {
-            background-color:rgb(41, 99, 44); /* Soft leafy green */
-            border-color: #81c784;
-            color: #ffffff;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-weight: 600;
+        .web-form-header {
             font-size: 16px;
-            transition: 0.3s ease all;
-            display: inline-block;
-            margin-top: 10px;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .web-form .btn-primary:hover {
-            background-color:rgb(51, 119, 54); /* Slightly darker but still soft */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .control-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: #f1f5f9;
+            padding: 10px 14px;
+            font-size: 14px;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            background-color: #1e293b;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            border: none;
+            color: #ffffff;
+            font-weight: 500;
+            border-radius: 10px;
+            padding: 10px 24px;
+            font-size: 15px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
         }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .success-page .success-body .success-message {
+            color: #1e293b;
+        }
+
+        .phone-picker .search-phones input[type=search] {
+            color: white;
+        }
+
+        .msgprint {
+            color: #1e293b;
+        }
+
     `;
     document.head.appendChild(style);
 });
