@@ -11,7 +11,6 @@
   "amended_from",
   "contract_type",
   "title",
-  "status",
   "workflow_state",
   "column_break_lrpk",
   "request_id",
@@ -31,10 +30,13 @@
   "column_break_hovo",
   "contract_duration",
   "contract_end_date",
+  "termination_clause_summary",
   "section_break_ifnp",
   "termination_notice_period",
   "renewal_details_section",
   "is_contract_renewable",
+  "section_break_mexl",
+  "is_payment_involved",
   "financial_details_section",
   "amount_to_receive",
   "total_amount",
@@ -47,7 +49,8 @@
   "documenso_data_section",
   "document_id",
   "upload_url",
-  "recipient_id"
+  "recipient_id",
+  "signing_url"
  ],
  "fields": [
   {
@@ -77,7 +80,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Contract Type",
-   "options": "Fixed Term\nPermanent\nFreelancer\nOther",
+   "options": "Select\nEmployment Contract\nBusiness & Commercial Contract\nService Contract\nReal Estate Contract\nFinancial Contract\nConfidentiality & Non-Disclosure Contract\nSales & Marketing Contract\nIntellectual Property Contract\nInvestment & Partnership Contract\nLegal & Government Contract",
    "reqd": 1
   },
   {
@@ -88,20 +91,20 @@
   {
    "fieldname": "requester_name",
    "fieldtype": "Data",
-   "label": "Requester Name",
+   "label": "Name",
    "reqd": 1
   },
   {
    "fieldname": "requester_department",
    "fieldtype": "Data",
-   "label": "Requester Department",
+   "label": "Department",
    "reqd": 1
   },
   {
    "fieldname": "counterparty_name",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "CounterParty Name",
+   "label": "CounterParty",
    "options": "CounterParty",
    "reqd": 1
   },
@@ -117,7 +120,7 @@
    "fieldname": "contract_term",
    "fieldtype": "Select",
    "label": "Contract Term",
-   "options": "Definite\nIndefinite",
+   "options": "Select\nDefinite\nIndefinite",
    "reqd": 1
   },
   {
@@ -127,10 +130,11 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.contract_term == \"Definite\"",
    "fieldname": "contract_duration",
    "fieldtype": "Int",
    "label": "Contract Duration (in months)",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.contract_term == \"Definite\""
   },
   {
    "fieldname": "contract_end_date",
@@ -156,6 +160,7 @@
    "options": "Yes\nNo"
   },
   {
+   "depends_on": "eval:doc.is_payment_involved == 1",
    "fieldname": "financial_details_section",
    "fieldtype": "Section Break",
    "label": "Financial Details"
@@ -173,7 +178,7 @@
   {
    "fieldname": "requester_details_section",
    "fieldtype": "Section Break",
-   "label": "Requester Details"
+   "label": "Contract Manager Details"
   },
   {
    "fieldname": "column_break_phts",
@@ -221,12 +226,6 @@
    "fieldtype": "Text Editor",
    "label": "Content",
    "reqd": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Draft\nApproved\nRejected"
   },
   {
    "fieldname": "workflow_state",
@@ -284,6 +283,29 @@
    "label": "Request ID",
    "options": "Contract Request",
    "read_only": 1
+  },
+  {
+   "fieldname": "signing_url",
+   "fieldtype": "Data",
+   "label": "Signing URL",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.contract_term == \"Indefinite\"",
+   "fieldname": "termination_clause_summary",
+   "fieldtype": "Text",
+   "label": "Termination Clause Summary",
+   "mandatory_depends_on": "eval:doc.contract_term == \"Indefinite\""
+  },
+  {
+   "fieldname": "section_break_mexl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_payment_involved",
+   "fieldtype": "Check",
+   "label": "Is Payment Involved?"
   }
  ],
  "has_web_view": 1,
@@ -291,7 +313,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-11 10:45:18.759597",
+ "modified": "2025-04-13 23:53:22.358823",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",

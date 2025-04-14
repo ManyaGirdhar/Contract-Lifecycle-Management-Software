@@ -143,7 +143,31 @@ frappe.ui.form.on('Contract', {
                 d.show(); 
             });
         }
+        // Fetch Template Content Button
+        if (frm.doc.workflow_state === 'Draft') {
+        frm.add_custom_button('Fetch Template Content', () => {
+            if (!frm.doc.contract_type) {
+                frappe.msgprint('Please select a Contract Type first.');
+                return;
+            }
+
+            frappe.call({
+                method: "clm.contract_lifecycle_management.doctype.contract.contract.get_contract_template", 
+                args: {
+                    contract_type: frm.doc.contract_type
+                },
+                callback: function(r) {
+                    if (r.message) {
+                        frm.set_value('content', r.message); // assuming content field exists
+                        frappe.msgprint('Content fetched from template!');
+                    } else {
+                        frappe.msgprint('No template found for this contract type.');
+                    }
+                }
+            });
+        });
     }
+}
 });
 
 
