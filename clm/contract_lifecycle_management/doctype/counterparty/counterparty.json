@@ -6,19 +6,16 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "counterparty_details_section",
+  "requester_details_section",
   "organization",
+  "requester_phone_no",
+  "column_break_pswz",
+  "requester_email",
   "legal_team_details_section",
   "member_name",
   "member_phone_no",
   "column_break_bgzr",
   "member_email",
-  "negotiator_details_section",
-  "negotiator_name",
-  "negotiator_phone_no",
-  "column_break_xsei",
-  "negotiator_email",
-  "role_copy",
   "contact_details_section",
   "name1",
   "phone_no",
@@ -67,11 +64,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "counterparty_details_section",
-   "fieldtype": "Section Break",
-   "label": "CounterParty Details"
-  },
-  {
    "fieldname": "legal_team_details_section",
    "fieldtype": "Section Break",
    "label": "Legal Team Member Details"
@@ -92,48 +84,37 @@
    "label": "Member Phone No."
   },
   {
-   "fieldname": "negotiator_details_section",
-   "fieldtype": "Section Break",
-   "label": "Negotiator Details"
-  },
-  {
-   "fieldname": "negotiator_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Negotiator Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "negotiator_phone_no",
-   "fieldtype": "Phone",
-   "label": "Negotiator Phone No."
-  },
-  {
-   "fieldname": "column_break_xsei",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "role_copy",
-   "fieldtype": "Data",
-   "label": "Negotiator Role"
-  },
-  {
    "fieldname": "member_email",
    "fieldtype": "Data",
    "label": "Member Email",
    "reqd": 1
   },
   {
-   "fieldname": "negotiator_email",
+   "fieldname": "requester_details_section",
+   "fieldtype": "Section Break",
+   "label": "Requester Details"
+  },
+  {
+   "fieldname": "requester_email",
    "fieldtype": "Data",
-   "label": "Negotiator Email",
+   "label": "Email",
    "options": "Email",
    "reqd": 1
+  },
+  {
+   "fieldname": "requester_phone_no",
+   "fieldtype": "Phone",
+   "label": "Phone No.",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_pswz",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-09 18:29:07.000247",
+ "modified": "2025-04-11 15:00:54.141941",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "CounterParty",
