@@ -22,8 +22,10 @@
   "requester_department",
   "counterparty_details_section",
   "counterparty_name",
+  "legal_member_email",
   "column_break_vfjk",
   "counterparty_email",
+  "signee_email",
   "contract_period_details_section",
   "contract_term",
   "contract_effective_date",
@@ -306,6 +308,21 @@
    "fieldname": "is_payment_involved",
    "fieldtype": "Check",
    "label": "Is Payment Involved?"
+  },
+  {
+   "fetch_from": "counterparty_name.member_email",
+   "fieldname": "legal_member_email",
+   "fieldtype": "Data",
+   "label": "Legal Member Email",
+   "options": "Email",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "counterparty_name.email",
+   "fieldname": "signee_email",
+   "fieldtype": "Data",
+   "label": "Signee Email",
+   "options": "Email"
   }
  ],
  "has_web_view": 1,
@@ -313,7 +330,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-13 23:53:22.358823",
+ "modified": "2025-04-14 10:51:27.771347",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
