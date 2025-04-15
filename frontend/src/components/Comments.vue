@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+const emit = defineEmits(['comment-added']);
 import { ref, onMounted, watch } from 'vue';
 
 const props = defineProps({
@@ -88,6 +89,7 @@ const postComment = async () => {
     if (res.ok && result.data) {
       newComment.value = ''; // ✅ Clear textarea
       await fetchComments(); // ✅ Reload comments
+      emit('comment-added');
     } else {
       console.error('Post failed:', result);
       alert(result.message || 'Failed to post comment.');

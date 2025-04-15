@@ -90,10 +90,10 @@ function add_action_dropdown_on_top(current_state, docname) {
     const transitions = {
         "Draft": [{ action: "Approve", next_state: "Approved" }],
         "Approved": [
-            { action: "Send for Negotiation", next_state: "In Negotiation" },
+            { action: "Send for Negotiation", next_state: "In negotiation" },
             { action: "Reject", next_state: "Rejected" }
         ],
-        "In Negotiation": [
+        "In negotiation": [
             { action: "Send to Legal", next_state: "Legal Review" },
             { action: "Reject", next_state: "Rejected" }
         ],
@@ -102,7 +102,7 @@ function add_action_dropdown_on_top(current_state, docname) {
             { action: "Final Approval", next_state: "Final Approval" },
             { action: "Reject", next_state: "Rejected" }
         ],
-        "Modified": [{ action: "Send Back to Negotiation", next_state: "In Negotiation" }],
+        "Modified": [{ action: "Send Back to Negotiation", next_state: "In negotiation" }],
         "Final Approval": [
             { action: "Mark as Negotiated", next_state: "Negotiated" },
             { action: "Reject", next_state: "Rejected" }
