@@ -13,7 +13,7 @@
                         Send for Legal Review
                     </button>
 
-                    <button v-if="['Legal Review', 'In negotiation'].includes(contract.workflow_state)"
+                    <button v-if="['Legal Review', 'In negotiation', 'Modified'].includes(contract.workflow_state)"
                         class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
                         @click="updateWorkflowState('Final Approval')">
                         Approve
@@ -33,22 +33,22 @@
                     <div v-html="contract.content || 'No details available.'" class="prose max-w-none mt-1"></div>
                 </div>
 
-                <div class="mt-6 flex flex-wrap gap-4">
+                <!-- <div class="mt-6 flex flex-wrap gap-4">
                     <button v-if="contract.workflow_state === 'Modified'"
                         class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
                         @click="updateWorkflowState('Send Back to Negotiation')">
                         Request Changes
                     </button>
-                </div>
+                </div> -->
 
-                <button v-if="!['Active', 'Rejected', 'Modified'].includes(contract.workflow_state)"
+                <button v-if="!['Active', 'Rejected', 'Awaiting Signature'].includes(contract.workflow_state)"
                     class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition"
                     @click="updateWorkflowState('Rejected')">
                     Reject
                 </button>
 
                 <Comments v-if="!['Active', 'Rejected', 'Awaiting Signature'].includes(contract.workflow_state)"
-                    :doctype="'Contract'" :docname="contract.name" />
+                    :doctype="'Contract'" :docname="contract.name" @comment-added="handleComment"/>
             </div>
 
             <div v-else class="text-center text-gray-500">
@@ -86,6 +86,12 @@ export default {
     },
 
     methods: {
+        async handleComment() {
+            if (this.contract.workflow_state === 'Modified') {
+                await this.updateWorkflowState('Send Back to Negotiation');
+            }
+        },
+
         async fetchContract() {
             const contractName = this.$route.params.name;
 
