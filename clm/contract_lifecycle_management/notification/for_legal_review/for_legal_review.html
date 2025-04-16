@@ -1,0 +1,25 @@
+<p>Dear {{ frappe.get_doc("CounterParty", doc.counterparty_name).member_name }},</p>
+
+<p>
+  The contract titled "<strong>{{ doc.title }}</strong>" has now reached the <strong>Legal Review</strong> stage and requires your attention.<br>
+  Kindly review the details and provide your feedback or take necessary action at your earliest convenience.
+</p>
+
+<p>
+  🔗 <strong>Contract Link:</strong> 
+  <a href="https://three-korecent.frappe.cloud/frontend/contract/{{ doc.name }}" target="_blank">
+    Click here to view the contract
+  </a>
+</p>
+
+<p>
+  Please feel free to reach out if you have any questions or need further information.
+</p>
+
+<p>
+  Best regards,<br>
+  {% if doc.request_id %}
+  {{ frappe.get_doc("Contract Request", doc.request_id).requester_name }}
+{% endif %}<br>
+  {{ doc.counterparty_name }}
+</p>

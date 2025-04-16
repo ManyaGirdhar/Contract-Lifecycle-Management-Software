@@ -9,8 +9,12 @@
   "amended_from",
   "contract_type",
   "title",
-  "contract_duration",
   "description",
+  "column_break_xela",
+  "contract_term",
+  "contract_duration",
+  "contract_effective_date",
+  "termination_clause_summary",
   "requester_details_section",
   "requester_type",
   "requester_email",
@@ -20,7 +24,8 @@
  "fields": [
   {
    "fieldname": "section_break_0wlr",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Contract Details"
   },
   {
    "fieldname": "amended_from",
@@ -48,11 +53,12 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.contract_term == \"Definite\"",
    "fieldname": "contract_duration",
    "fieldtype": "Int",
    "in_list_view": 1,
    "label": "Contract Duration (in months)",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.contract_term == \"Definite\""
   },
   {
    "fieldname": "requester_email",
@@ -70,8 +76,7 @@
   {
    "fieldname": "description",
    "fieldtype": "Small Text",
-   "label": "Description",
-   "read_only": 1
+   "label": "Description"
   },
   {
    "fieldname": "requester_type",
@@ -87,12 +92,36 @@
   {
    "fieldname": "column_break_fteb",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contract_term",
+   "fieldtype": "Select",
+   "label": "Contract Term",
+   "options": "Select\nDefinite\nIndefinite",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_effective_date",
+   "fieldtype": "Date",
+   "label": "Contract Effective Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_xela",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.contract_term == \"Indefinite\"",
+   "fieldname": "termination_clause_summary",
+   "fieldtype": "Text",
+   "label": "Termination Clause Summary",
+   "mandatory_depends_on": "eval:doc.contract_term == \"Indefinite\""
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-14 23:49:10.232736",
+ "modified": "2025-04-16 12:24:37.300791",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Request",
