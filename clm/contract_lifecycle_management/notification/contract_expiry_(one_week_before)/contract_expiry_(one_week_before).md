@@ -7,6 +7,7 @@
 <hr>
 
 <h4>Contract Summary</h4>
+
 <ul>
   <li><strong>Contract ID:</strong> {{ doc.name }}</li>
   <li><strong>Title:</strong> {{ doc.title }}</li>
