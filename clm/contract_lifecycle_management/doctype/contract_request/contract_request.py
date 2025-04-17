@@ -24,6 +24,10 @@ def create_contract_from_request(source_name):
 	contract.counterparty_email = contract_request.requester_email
 	contract.description = contract_request.description
 	contract.request_id = contract_request.name  # Optional: Add reference back to request
+	contract.contract_term = contract_request.contract_term
+	contract.contract_effective_date = contract_request.contract_effective_date
+	contract.termination_clause_summary = contract_request.termination_clause_summary
+
 
 	# Return new document so open_mapped_doc can handle it
 	return contract
