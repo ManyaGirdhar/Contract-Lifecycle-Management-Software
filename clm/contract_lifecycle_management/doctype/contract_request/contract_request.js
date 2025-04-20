@@ -21,14 +21,20 @@ frappe.ui.form.on('Contract Request', {
         }
 
         // ✅ Show "Create Contract" only when request is submitted
-        if (frm.doc.docstatus === 1) {
-        // ✅ Add "Create Contract" button
-            frm.add_custom_button(__('Create Contract'), function () {
-                frappe.model.open_mapped_doc({
-                    method: "clm.contract_lifecycle_management.doctype.contract_request.contract_request.create_contract_from_request",
-                    frm: frm
+        if (frm.doc.docstatus === 1 && frm.doc.name) {
+            console.log(frm.doc.name);
+            frappe.db.get_value('Contract', { request_id: frm.doc.name }, 'name')
+                .then(r => {
+                    console.log(r);
+                    if (!r.message || Object.keys(r.message).length === 0) {
+                        frm.add_custom_button(__('Create Contract'), function () {
+                            frappe.model.open_mapped_doc({
+                                method: "clm.contract_lifecycle_management.doctype.contract_request.contract_request.create_contract_from_request",
+                                frm: frm
+                            });
+                        });
+                    }
                 });
-            });
         }
     }
 });

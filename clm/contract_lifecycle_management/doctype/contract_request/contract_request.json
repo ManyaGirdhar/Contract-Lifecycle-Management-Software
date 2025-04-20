@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{title}-{requester_name}-{##}",
  "creation": "2025-04-06 12:57:50.301492",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -121,10 +122,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-16 12:24:37.300791",
+ "modified": "2025-04-17 17:52:00.406435",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Request",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

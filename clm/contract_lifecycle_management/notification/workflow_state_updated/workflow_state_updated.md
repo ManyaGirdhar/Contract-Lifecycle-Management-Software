@@ -108,7 +108,7 @@
     {% set states = [
       "Draft", 
       "Approved", 
-      "In negotiation", 
+      "In Negotiation", 
       "Legal Review", 
       "Modified", 
       "Final Approval", 
