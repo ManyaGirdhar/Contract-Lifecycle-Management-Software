@@ -154,7 +154,7 @@ scheduler_events = {
 # 	],
 	"daily": [
 		# "clm.tasks.daily"
-        "clm.contract_lifecycle_management.doctype.contract.contract.def update_expired_contracts"
+        "clm.contract_lifecycle_management.doctype.contract.contract.update_expired_contracts"
 	],
 # 	"hourly": [
 # 		"clm.tasks.hourly"
