@@ -212,7 +212,7 @@ def summarize_contract_text(name):
 		genai.configure(api_key=api_key)
 		doc = frappe.get_doc("Contract", name)
 
-		model = genai.GenerativeModel("gemini-1.5-pro")
+		model = genai.GenerativeModel("gemini-1.5-pro-latest")
 		prompt = f"""
 				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
 
