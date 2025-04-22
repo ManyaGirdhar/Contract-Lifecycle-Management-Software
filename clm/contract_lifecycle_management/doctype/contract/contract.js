@@ -143,6 +143,36 @@ frappe.ui.form.on('Contract', {
                 d.show(); 
             });
         }
+        // Summarize Contract Button
+            frm.add_custom_button('Summarize Contract', () => {
+                if (!frm.doc.content) {
+                    frappe.msgprint('Contract content is empty. Nothing to summarize.');
+                    return;
+                }
+        
+                frappe.call({
+                    method: "clm.contract_lifecycle_management.doctype.contract.contract.summarize_contract_text",
+                    args: {
+                        name: frm.doc.name  // <-- Make sure this is included!
+                    },
+                    callback: function(r) {
+                        if (r.message) {
+                            frappe.msgprint({
+                                title: __('Contract Summary'),
+                                indicator: 'green',
+                                message: `<div style="max-height: 300px; overflow-y: auto;">${r.message}</div>`
+                            });
+                        } else {
+                            frappe.msgprint(__('No summary returned.'));
+                        }
+                    },
+                    error: function(err) {
+                        frappe.msgprint(__('Failed to summarize the contract.'));
+                        console.error("Summarizer Error:", err);
+                    }
+                });
+            });
+            
         // Fetch Template Content Button
         if (frm.doc.workflow_state === 'Draft') {
         frm.add_custom_button('Fetch Template Content', () => {

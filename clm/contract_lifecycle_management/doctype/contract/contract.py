@@ -1,13 +1,18 @@
 # Copyright (c) 2025, Manya and contributors
 # For license information, please see license.txt
 
+import os
 import re
 import frappe
 import difflib
+# from dotenv import load_dotenv
 from bs4 import BeautifulSoup
+import google.generativeai as genai
 from frappe.utils import add_months, nowdate, get_datetime_str, get_date_str
 from frappe.website.website_generator import WebsiteGenerator
 
+# Load environment variables
+# load_dotenv()
 
 class Contract(WebsiteGenerator):
 
@@ -195,3 +200,42 @@ def get_contract_template(contract_type):
         template = frappe.utils.cstr(template)  # Converts to string without escaping HTML
     
     return template
+
+@frappe.whitelist()
+def summarize_contract_text(name):
+	try:
+
+		api_key = os.getenv("GEMINI_API_KEY")
+		if not api_key:
+			return "API key not found in environment."
+
+		genai.configure(api_key=api_key)
+		doc = frappe.get_doc("Contract", name)
+
+		model = genai.GenerativeModel("gemini-1.5-pro")
+		prompt = f"""
+				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
+
+				Contract Name: {doc.name}
+				Contract Type: {doc.contract_type}
+				Effective Date: {doc.contract_effective_date}
+				End Date: {doc.contract_end_date}
+				Duration: {doc.contract_duration} month(s)
+				Workflow State: {doc.workflow_state}
+				Amount to Receive: {doc.amount_to_receive}
+				Tax: {doc.tax}%
+				Total Amount: {doc.total_amount}
+
+				Contract Content:
+				{doc.content}
+
+				Focus on explaining the purpose of the contract, key dates, financial details, and any important clauses found in the content.
+				"""
+		response = model.generate_content(prompt)
+
+		return response.text if hasattr(response, "text") else "Summary not available."
+
+	except Exception as e:
+		# Log the error in Frappe and return a message
+		frappe.log_error(frappe.get_traceback(), "Contract Summarization Error")
+		return f"Error occurred: {str(e)}"
