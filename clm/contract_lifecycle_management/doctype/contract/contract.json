@@ -52,7 +52,8 @@
   "document_id",
   "upload_url",
   "recipient_id",
-  "signing_url"
+  "signing_url",
+  "download_url"
  ],
  "fields": [
   {
@@ -325,6 +326,11 @@
    "label": "Signee Email",
    "options": "Email",
    "read_only": 1
+  },
+  {
+   "fieldname": "download_url",
+   "fieldtype": "Small Text",
+   "label": "Download URL"
   }
  ],
  "has_web_view": 1,
@@ -332,7 +338,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-14 23:51:16.745343",
+ "modified": "2025-04-24 10:48:43.612589",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
