@@ -19,7 +19,6 @@ frappe.ui.form.on('Contract', {
     },
 
     after_save: function(frm) {
-        console.log("after_save triggered!");
         frm.reload_doc();  // Refreshes the form without full page reload
     },
 
@@ -36,19 +35,9 @@ frappe.ui.form.on('Contract', {
                     method: "documenso_integration.api.sign_contract",
                     args: { contract_name: contract_name },
                     callback: function(response) {
-                        console.log("API Response:", response); // Debugging statement
-
-                        // if (response) {
-                        //     frappe.msgprint(__('Document sent for signature successfully!'));
-                        //     frappe.set_route("Form", "Contract", contract_name);
-                        // } else {
-                        //     // frappe.msgprint(__('Error sending document for signature.'));
-                        //     console.error("Error response:", response);
-                        // }
                     },
                     error: function(err) {
                         frappe.msgprint(__('Failed to connect to server.'));
-                        // console.error("AJAX Error:", err);
                     }
                 });
             }
@@ -143,6 +132,44 @@ frappe.ui.form.on('Contract', {
                 d.show(); 
             });
         }
+
+        // Download Contract Button
+        if (["Active", "Expired"].includes(frm.doc.workflow_state) && frm.doc.download_url) {
+            frm.add_custom_button('Download Contract', () => {
+                window.open(frm.doc.download_url, '_blank');
+            });
+        }
+        
+        // Summarize Contract Button
+        frm.add_custom_button('Summarize Contract', () => {
+            if (!frm.doc.content) {
+                frappe.msgprint('Contract content is empty. Nothing to summarize.');
+                return;
+            }
+    
+            frappe.call({
+                method: "clm.contract_lifecycle_management.doctype.contract.contract.summarize_contract_text",
+                args: {
+                    name: frm.doc.name  
+                },
+                callback: function(r) {
+                    if (r.message) {
+                        frappe.msgprint({
+                            title: __('Contract Summary'),
+                            indicator: 'green',
+                            message: `<div style="max-height: 300px; overflow-y: auto;">${r.message}</div>`
+                        });
+                    } else {
+                        frappe.msgprint(__('No summary returned.'));
+                    }
+                },
+                error: function(err) {
+                    frappe.msgprint(__('Failed to summarize the contract.'));
+                    console.error("Summarizer Error:", err);
+                }
+            });
+        });
+            
         // Fetch Template Content Button
         if (frm.doc.workflow_state === 'Draft') {
         frm.add_custom_button('Fetch Template Content', () => {
