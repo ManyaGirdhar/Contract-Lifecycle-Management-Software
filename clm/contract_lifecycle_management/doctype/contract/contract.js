@@ -242,3 +242,10 @@ function calculate_total(frm) {
     let tax_amount = (amount * tax_percentage) / 100;
     frm.set_value('total_amount', amount + tax_amount);
 }
+
+
+frappe.realtime.on('workflow_state_updated', (data) => {
+    window.location.reload()
+    console.log(data)
+   })
+   
