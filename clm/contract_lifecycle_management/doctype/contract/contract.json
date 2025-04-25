@@ -330,7 +330,8 @@
   {
    "fieldname": "download_url",
    "fieldtype": "Small Text",
-   "label": "Download URL"
+   "label": "Download URL",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
@@ -338,7 +339,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-24 10:48:43.612589",
+ "modified": "2025-04-25 12:30:15.466737",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
