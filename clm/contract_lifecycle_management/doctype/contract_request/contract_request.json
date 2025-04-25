@@ -17,10 +17,9 @@
   "contract_effective_date",
   "termination_clause_summary",
   "requester_details_section",
-  "requester_type",
-  "requester_email",
+  "requester_name",
   "column_break_fteb",
-  "requester_name"
+  "requester_email"
  ],
  "fields": [
   {
@@ -63,12 +62,13 @@
   },
   {
    "fieldname": "requester_email",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Requester Email",
-   "options": "Email",
+   "options": "User",
    "read_only": 1
   },
   {
+   "fetch_from": "requester_email.full_name",
    "fieldname": "requester_name",
    "fieldtype": "Data",
    "label": "Requester Name",
@@ -78,12 +78,6 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
-  },
-  {
-   "fieldname": "requester_type",
-   "fieldtype": "Select",
-   "label": "Requester Type",
-   "options": "Individual\nOrganization"
   },
   {
    "fieldname": "requester_details_section",
@@ -122,7 +116,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-17 17:52:00.406435",
+ "modified": "2025-04-21 16:10:33.685942",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Request",
