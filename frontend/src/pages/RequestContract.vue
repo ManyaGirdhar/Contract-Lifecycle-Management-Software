@@ -1,98 +1,81 @@
 <template>
-  <div class="container mx-auto max-w-2xl p-6 bg-white shadow-xl rounded-2xl mt-10">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">📝 Submit a Contract Request</h2>
-    <form @submit.prevent="submitRequest" class="space-y-6">
+  <div class="container mx-auto max-w-4xl p-8 bg-[#264e36] shadow-2xl rounded-2xl mt-10 text-slate-100 font-inter">
+    <h2 class="text-3xl font-bold text-white mb-8 text-center">📄 Submit a Contract Request</h2>
 
-      <!-- Contract Type -->
-      <div>
-        <label class="block mb-2 text-sm font-semibold text-gray-700">Contract Type</label>
-        <select v-model="contract.contract_type" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option disabled value="">Select contract type</option>
-          <option>Select</option>
-          <option>Employment Contract</option>
-          <option>Business & Commercial Contract</option>
-          <option>Service Contract</option>
-          <option>Real Estate Contract</option>
-          <option>Financial Contract</option>
-          <option>Confidentiality & Non-Disclosure Contract</option>
-          <option>Sales & Marketing Contract</option>
-          <option>Intellectual Property Contract</option>
-          <option>Investment & Partnership Contract</option>
-          <option>Legal & Government Contract</option>
-        </select>
+    <form @submit.prevent="submitRequest" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Left Column -->
+      <div class="space-y-6">
+        <!-- Contract Type -->
+        <div>
+          <label class="block mb-2 text-sm font-medium text-white">Contract Type</label>
+          <select v-model="contract.contract_type" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg">
+            <option disabled value="">Select contract type</option>
+            <option>Employment Contract</option>
+            <option>Business & Commercial Contract</option>
+            <option>Service Contract</option>
+            <option>Real Estate Contract</option>
+            <option>Financial Contract</option>
+            <option>Confidentiality & Non-Disclosure Contract</option>
+            <option>Sales & Marketing Contract</option>
+            <option>Intellectual Property Contract</option>
+            <option>Investment & Partnership Contract</option>
+            <option>Legal & Government Contract</option>
+          </select>
+        </div>
+
+        <!-- Title -->
+        <div>
+          <label class="block mb-2 text-sm font-medium text-white">Title</label>
+          <input v-model="contract.title" type="text" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg" placeholder="Enter contract title" />
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block mb-2 text-sm font-medium text-white">Description</label>
+          <textarea v-model="contract.description" required rows="8" class="form-control w-full bg-slate-900 text-slate-100 rounded-lg resize-none" placeholder="Enter description of the contract"></textarea>
+        </div>
       </div>
 
-      <!-- Title -->
-      <div>
-        <label class="block mb-2 text-sm font-semibold text-gray-700">Title</label>
-        <input
-          v-model="contract.title"
-          type="text"
-          required
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter contract title"
-        />
-      </div>
+      <!-- Right Column -->
+      <div class="space-y-6">
+        <!-- Contract Term -->
+        <div>
+          <label class="block mb-2 text-sm font-medium text-white">Contract Term</label>
+          <select v-model="contract.contract_term" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg">
+            <option disabled value="">Select contract term</option>
+            <option>Definite</option>
+            <option>Indefinite</option>
+          </select>
+        </div>
 
-      <!-- Contract Duration -->
-      <div>
-        <label class="block mb-2 text-sm font-semibold text-gray-700">Contract Duration (in months)</label>
-        <input
-          v-model.number="contract.contract_duration"
-          type="number"
-          required
-          min="1"
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
+        <!-- Contract Duration -->
+        <div v-if="contract.contract_term === 'Definite'">
+          <label class="block mb-2 text-sm font-medium text-white">Contract Duration (in months)</label>
+          <input v-model.number="contract.contract_duration" type="number" min="1" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg" />
+        </div>
 
-      <!-- Requester Type -->
-      <div>
-        <label class="block mb-2 text-sm font-semibold text-gray-700">Requester Type</label>
-        <select v-model="contract.requester_type" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option disabled value="">Select type</option>
-          <option>Individual</option>
-          <option>Organization</option>
-        </select>
-      </div>
+        <!-- Contract Effective Date -->
+        <div>
+          <label class="block mb-2 text-sm font-medium text-white">Contract Effective Date</label>
+          <input v-model="contract.contract_effective_date" type="date" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg" />
+        </div>
 
-      <!-- Requester Name -->
-      <div v-if="contract.requester_type">
-        <label class="block mb-2 text-sm font-semibold text-gray-700">
-          {{ contract.requester_type === 'Organization' ? 'Organization Name' : 'Name' }}
-        </label>
-        <input
-          v-model="contract.requester_name"
-          type="text"
-          required
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter name"
-        />
-      </div>
-
-      <!-- Description -->
-      <div>
-        <label class="block mb-2 text-sm font-semibold text-gray-700">Description</label>
-        <textarea
-          v-model="contract.description"
-          required
-          rows="4"
-          class="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter description of the contract"
-        ></textarea>
-      </div>
-
-      <!-- Submit -->
-      <div class="flex justify-end">
-        <button
-          type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300"
-        >
-          Submit
-        </button>
+        <!-- Termination Clause Summary -->
+        <div v-if="contract.contract_term === 'Indefinite'">
+          <label class="block mb-2 text-sm font-medium text-white">Termination Clause Summary</label>
+          <textarea v-model="contract.termination_clause_summary" rows="4" required class="form-control w-full bg-slate-900 text-slate-100 rounded-lg resize-none" placeholder="Enter termination clause summary"></textarea>
+        </div>
       </div>
     </form>
+
+    <!-- Submit Button Outside Form -->
+    
   </div>
+  <div class="text-right mt-8">
+      <button type="submit" @click="submitRequest" class="w-auto bg-black hover:bg-gray-800 text-white font-semibold py-1 px-3 rounded-lg shadow-md transition-all duration-300">
+        Submit
+      </button>
+    </div>
 </template>
 
 <script setup>
@@ -104,12 +87,14 @@ const router = useRouter();
 const contract = ref({
   contract_type: '',
   title: '',
+  contract_term: '',
   contract_duration: null,
-  requester_type: '',
-  requester_name: '',
-  description: '',
-  requester_email: ''
+  contract_effective_date: '',
+  termination_clause_summary: '',
+  requester_email: '',
+  description: ''
 });
+
 
 // Fetch current user's email
 const fetchCurrentUserEmail = async () => {

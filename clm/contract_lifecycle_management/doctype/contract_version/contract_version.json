@@ -102,7 +102,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-07 12:42:08.938679",
+ "modified": "2025-04-22 16:37:00.188971",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Version",
@@ -138,6 +138,28 @@
    "report": 1,
    "role": "Requester Legal Team",
    "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CounterParty",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "CounterParty Legal Team",
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",

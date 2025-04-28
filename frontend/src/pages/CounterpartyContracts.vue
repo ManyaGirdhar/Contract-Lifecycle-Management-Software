@@ -12,14 +12,13 @@
                         class="px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500"
                     />
                     <Button
-                    size="xl"
-                    theme="primary"
-                    class="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#264e36] text-white hover:bg-[#2f5f44]"
-                    @click="requestContract"
+                        size="xl"
+                        theme="primary"
+                        class="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#264e36] text-white hover:bg-[#2f5f44]"
+                        @click="goToRequestForm"
                     >
-                    Request Contract
+                        Request Contract
                     </Button>
-
                 </div>
             </div>
   
@@ -47,90 +46,102 @@
         </div>
     </div>
 </template>
-  
+
 <script>
-    export default {
-        name: "CounterpartyContracts",
+export default {
+    name: "CounterpartyContracts",
 
-        data() {
-            return {
-                contracts: [],
-                userEmail: null,
-                searchQuery: ""
-            };
-        },
-        
-        async mounted() {
-            await this.getUserEmail();
-            
-            if (this.userEmail) {
-                this.fetchContracts();
-            }
-        },
+    data() {
+        return {
+            contracts: [],
+            userEmail: null,
+            userRoles: [],
+            searchQuery: ""
+        };
+    },
 
-        computed: {
-            filteredContracts() {
-                if (!this.searchQuery) return this.contracts;
-                const q = this.searchQuery.toLowerCase();
-                return this.contracts.filter(c => c.name.toLowerCase().includes(q));
-            }
-        },
-
-        methods: {
-            async getUserEmail() {
-                try {
-                    const response = await fetch('/api/method/frappe.auth.get_logged_user');
-                    
-                    if (!response.ok) throw new Error('Failed to get user email');
-                    
-                    const data = await response.json();
-                    this.userEmail = data.message;
-                }
-                
-                catch (error) {
-                    console.error('❌ Error fetching user email:', error);
-                }
-            },
-  
-            async fetchContracts() {
-                try {
-                    const response = await fetch('/api/resource/Contract?fields=["name","workflow_state","counterparty_email"]');
-                    
-                    if (!response.ok) throw new Error('Failed to fetch contracts');
-  
-                    const data = await response.json();
-  
-                    const allowedStates = [
-                        "In negotiation",
-                        "Legal Review",
-                        "Modified",
-                        "Final Approval",
-                        "Negotiated",
-                        "Awaiting Signature",
-                        "Active",
-                        "Rejected"
-                    ];
-  
-                    if (data.data && Array.isArray(data.data)) {
-                        this.contracts = data.data.filter(contract =>
-                            contract.counterparty_email === this.userEmail &&
-                            allowedStates.includes(contract.workflow_state)
-                        );
-                    }
-                }
-                
-                catch (error) {
-                    console.error("❌ Error fetching contracts:", error);
-                }
-            },
-  
-            goToContract(contractName) {
-                this.$router.push(`/contract/${contractName}`);
-            },
-  
-            goToRequestForm() {
-                this.$router.push("/request-contract");
-            }
+    async mounted() {
+        await this.getUserInfo();
+        if (this.userEmail) {
+            this.fetchContracts();
         }
-    };
-</script>  
+    },
+
+    computed: {
+        filteredContracts() {
+            if (!this.searchQuery) return this.contracts;
+            const q = this.searchQuery.toLowerCase();
+            return this.contracts.filter(c => c.name.toLowerCase().includes(q));
+        }
+    },
+
+    methods: {
+        async getUserInfo() {
+            try {
+                // Get logged-in user's email
+                const response = await fetch("/api/method/frappe.auth.get_logged_user");
+                const { message: email } = await response.json();
+                this.userEmail = email;
+
+                // Get user's uid
+                const uidResponse = await fetch("/api/method/frappe.auth.get_logged_user");
+                const { message: uid } = await uidResponse.json();  // Ensure this returns a 'uid'
+                
+                // Get roles via frappe.desk.permission.get_roles
+                const rolesRes = await fetch(`/api/method/frappe.core.doctype.user.user.get_roles?uid=${uid}`);
+                const rolesJson = await rolesRes.json();
+                this.userRoles = rolesJson.message || [];
+            } catch (error) {
+                console.error("❌ Error fetching user info:", error);
+            }
+        },
+
+        async fetchContracts() {
+            try {
+                const response = await fetch('/api/resource/Contract?fields=["name","workflow_state","counterparty_email","legal_member_email"]&limit_page_length=100');
+                if (!response.ok) throw new Error('Failed to fetch contracts');
+
+                const data = await response.json();
+                const allowedStates = [
+                    "In negotiation",
+                    "Legal Review",
+                    "Modified",
+                    "Final Approval",
+                    "Negotiated",
+                    "Awaiting Signature",
+                    "Active",
+                    "Rejected"
+                ];
+
+                if (data.data && Array.isArray(data.data)) {
+                    // Check if the user is part of "CounterParty Legal Team"
+                    const isLegalTeam = this.userRoles.includes("CounterParty Legal Team");
+                    const isCounterparty = this.userRoles.includes("CounterParty");
+
+                    this.contracts = data.data.filter(contract => {
+                        const stateAllowed = allowedStates.includes(contract.workflow_state);
+
+                        if (isLegalTeam) {
+                            return contract.workflow_state === "Legal Review" && contract.legal_member_email === this.userEmail && stateAllowed;
+                        }
+                        
+                        if (isCounterparty) {
+                            return contract.counterparty_email === this.userEmail && stateAllowed;
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("❌ Error fetching contracts:", error);
+            }
+        },
+
+        goToContract(contractName) {
+            this.$router.push(`/contract/${contractName}`);
+        },
+
+        goToRequestForm() {
+            this.$router.push("/request-contract");
+        }
+    }
+};
+</script>
