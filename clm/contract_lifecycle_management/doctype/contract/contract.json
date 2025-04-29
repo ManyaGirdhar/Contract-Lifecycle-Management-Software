@@ -22,10 +22,12 @@
   "requester_department",
   "counterparty_details_section",
   "counterparty_name",
-  "legal_member_email",
-  "column_break_vfjk",
+  "column_break_izzq",
   "counterparty_email",
-  "signee_email",
+  "section_break_xuvx",
+  "team_member_details",
+  "legal_team",
+  "signee",
   "contract_period_details_section",
   "contract_term",
   "contract_effective_date",
@@ -194,10 +196,6 @@
    "label": "CounterParty Details"
   },
   {
-   "fieldname": "column_break_vfjk",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "contract_period_details_section",
    "fieldtype": "Section Break",
    "label": "Contract Period Details"
@@ -312,26 +310,36 @@
    "label": "Is Payment Involved?"
   },
   {
-   "fetch_from": "counterparty_name.member_email",
-   "fieldname": "legal_member_email",
-   "fieldtype": "Data",
-   "label": "Legal Member Email",
-   "options": "Email",
-   "read_only": 1
-  },
-  {
-   "fetch_from": "counterparty_name.email",
-   "fieldname": "signee_email",
-   "fieldtype": "Data",
-   "label": "Signee Email",
-   "options": "Email",
-   "read_only": 1
-  },
-  {
    "fieldname": "download_url",
    "fieldtype": "Small Text",
    "label": "Download URL",
    "read_only": 1
+  },
+  {
+   "fieldname": "team_member_details",
+   "fieldtype": "Table",
+   "label": "Team Member Details",
+   "options": "Team Member"
+  },
+  {
+   "fieldname": "column_break_izzq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_xuvx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "legal_team",
+   "fieldtype": "Table",
+   "label": "Legal Team",
+   "options": "Legal Team"
+  },
+  {
+   "fieldname": "signee",
+   "fieldtype": "Table",
+   "label": "Signee",
+   "options": "Signee"
   }
  ],
  "has_web_view": 1,
@@ -339,7 +347,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-25 12:30:15.466737",
+ "modified": "2025-04-29 16:03:46.172052",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",

@@ -28,6 +28,50 @@ class Contract(WebsiteGenerator):
 
 	def after_insert(doc):
 		doc.create_initial_version()
+		doc.create_user_with_role()
+
+		counterparty_doc = frappe.get_doc("CounterParty", doc.counterparty_name)
+
+    	# Collect emails from both child tables
+		legal_emails = [member.email for member in doc.legal_team if member.email]
+		signee_emails = [member.email for member in doc.signee if member.email]
+
+		# Append a single row for this contract
+		counterparty_doc.append("team_members", {
+			"contract_assigned": doc.name,
+			"email": ", ".join(legal_emails) if legal_emails else None,
+			"signee_email": ", ".join(signee_emails) if signee_emails else None
+		})
+
+		counterparty_doc.save(ignore_permissions=True)
+
+	def create_user_with_role(self):
+		# Create user for Legal Team Member
+		for member in self.legal_team:
+			if member.email and not frappe.db.exists("User", member.email):
+				# if member.role == "Legal Team Member":
+					user = frappe.get_doc({
+						"doctype": "User",
+						"email": member.email,
+						"first_name": member.first_name,
+						"last_name": member.last_name,
+						"roles": [{"role": "CounterParty Legal Team"}],
+						"user_type": "Website User"
+					})
+					user.insert(ignore_permissions=True)
+		for mem in self.signee:
+			if mem.email and not frappe.db.exists("User", mem.email):
+					user = frappe.get_doc({
+						"doctype": "User",
+						"email": mem.email,
+						"first_name": mem.first_name,
+						"last_name": mem.last_name,
+						"roles": [{"role": "Signee"}],
+						"user_type": "Website User"
+					})
+					user.insert(ignore_permissions=True)
+
+
 
 	# @staticmethod
 	def create_initial_version(self):
@@ -170,36 +214,36 @@ def get_redlined_diff(prev_text, curr_text):
 
 @frappe.whitelist()
 def update_expired_contracts():
-    today = nowdate()
-    
-    # Fetch contracts where end_date < today and current workflow state is not 'Expired'
-    contracts = frappe.get_all("Contract", 
-        filters={
-            "contract_end_date": ["<", today],
-            "workflow_state": ["!=", "Expired"]
-        },
-        fields=["name", "workflow_state"]
-    )
+	today = nowdate()
+	
+	# Fetch contracts where end_date < today and current workflow state is not 'Expired'
+	contracts = frappe.get_all("Contract", 
+		filters={
+			"contract_end_date": ["<", today],
+			"workflow_state": ["!=", "Expired"]
+		},
+		fields=["name", "workflow_state"]
+	)
 
-    for contract in contracts:
-        try:
-            doc = frappe.get_doc("Contract", contract.name)
-            doc.workflow_state = "Expired"  # Make sure this is a valid state in your workflow
-            doc.save()
-            frappe.db.commit()
-        except Exception as e:
-            frappe.log_error(f"Failed to update workflow for Contract {contract.name}: {str(e)}")
+	for contract in contracts:
+		try:
+			doc = frappe.get_doc("Contract", contract.name)
+			doc.workflow_state = "Expired"  # Make sure this is a valid state in your workflow
+			doc.save()
+			frappe.db.commit()
+		except Exception as e:
+			frappe.log_error(f"Failed to update workflow for Contract {contract.name}: {str(e)}")
 
 @frappe.whitelist()
 def get_contract_template(contract_type):
-    template = frappe.db.get_value('Contract Content', {'contract_type': contract_type}, 'content')
-    
-    # If using a Long Text field (in case of legacy data)
-    # Ensure it's not escaping HTML tags in case of legacy Long Text field
-    if template:
-        template = frappe.utils.cstr(template)  # Converts to string without escaping HTML
-    
-    return template
+	template = frappe.db.get_value('Contract Content', {'contract_type': contract_type}, 'content')
+	
+	# If using a Long Text field (in case of legacy data)
+	# Ensure it's not escaping HTML tags in case of legacy Long Text field
+	if template:
+		template = frappe.utils.cstr(template)  # Converts to string without escaping HTML
+	
+	return template
 
 @frappe.whitelist()
 def summarize_contract_text(name):

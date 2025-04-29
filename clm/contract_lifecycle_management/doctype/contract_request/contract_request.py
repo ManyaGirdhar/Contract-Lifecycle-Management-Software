@@ -6,7 +6,7 @@ from frappe.model.document import Document
 
 class ContractRequest(Document):
 	pass
-        
+
 @frappe.whitelist()
 def create_contract_from_request(source_name):
 	# Get the ContractRequest document
@@ -27,6 +27,22 @@ def create_contract_from_request(source_name):
 	contract.contract_term = contract_request.contract_term
 	contract.contract_effective_date = contract_request.contract_effective_date
 	contract.termination_clause_summary = contract_request.termination_clause_summary
+
+	# Map child table: Team Member Details
+	for member in contract_request.team_member_details:
+		if(member.role == "Legal Team Member"):
+			contract.append("legal_team", {
+				"first_name": member.first_name,
+				"last_name": member.last_name,
+				"email": member.email,
+			})
+		else:
+			contract.append("signee", {
+				"first_name": member.first_name,
+				"last_name": member.last_name,
+				"email": member.email
+			})
+		
 
 
 	# Return new document so open_mapped_doc can handle it
