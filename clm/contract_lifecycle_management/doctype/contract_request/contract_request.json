@@ -19,7 +19,9 @@
   "requester_details_section",
   "requester_name",
   "column_break_fteb",
-  "requester_email"
+  "requester_email",
+  "team_member_details_section",
+  "team_member_details"
  ],
  "fields": [
   {
@@ -111,12 +113,23 @@
    "fieldtype": "Text",
    "label": "Termination Clause Summary",
    "mandatory_depends_on": "eval:doc.contract_term == \"Indefinite\""
+  },
+  {
+   "fieldname": "team_member_details_section",
+   "fieldtype": "Section Break",
+   "label": "Team Member Details"
+  },
+  {
+   "fieldname": "team_member_details",
+   "fieldtype": "Table",
+   "label": "Team Member Details",
+   "options": "Team Member"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-21 16:10:33.685942",
+ "modified": "2025-04-28 16:49:28.286135",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract Request",

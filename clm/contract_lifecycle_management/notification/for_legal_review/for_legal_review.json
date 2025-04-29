@@ -1,7 +1,7 @@
 {
  "attach_print": 0,
  "channel": "Email",
- "condition": "doc.workflow_state == \"Legal Review\"",
+ "condition": "doc.workflow_state == \"Legal Review\"\n",
  "creation": "2025-04-16 11:13:35.517760",
  "days_in_advance": 0,
  "docstatus": 0,
@@ -13,14 +13,15 @@
  "is_standard": 1,
  "message": "<p>Dear {{ frappe.get_doc(\"CounterParty\", doc.counterparty_name).member_name }},</p>\n\n<p>\n  The contract titled \"<strong>{{ doc.title }}</strong>\" has now reached the <strong>Legal Review</strong> stage and requires your attention.<br>\n  Kindly review the details and provide your feedback or take necessary action at your earliest convenience.\n</p>\n\n<p>\n  \ud83d\udd17 <strong>Contract Link:</strong> \n  <a href=\"https://three-korecent.frappe.cloud/frontend/contract/{{ doc.name }}\" target=\"_blank\">\n    Click here to view the contract\n  </a>\n</p>\n\n<p>\n  Please feel free to reach out if you have any questions or need further information.\n</p>\n\n<p>\n  Best regards,<br>\n  {% if doc.request_id %}\n  {{ frappe.get_doc(\"Contract Request\", doc.request_id).requester_name }}\n{% endif %}<br>\n  {{ doc.counterparty_name }}\n</p>\n",
  "message_type": "HTML",
- "modified": "2025-04-16 11:45:25.500848",
+ "modified": "2025-04-29 16:16:42.337113",
  "modified_by": "manya@korecent.com",
  "module": "Contract Lifecycle Management",
  "name": "For Legal Review",
  "owner": "manya@korecent.com",
  "recipients": [
   {
-   "receiver_by_document_field": "legal_member_email"
+   "receiver_by_document_field": "email,legal_team",
+   "receiver_by_role": ""
   }
  ],
  "send_system_notification": 0,

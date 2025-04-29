@@ -1,102 +1,38 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{name1}",
+ "autoname": "format:{organization}",
  "creation": "2025-03-11 10:49:45.998466",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "requester_details_section",
   "organization",
   "requester_phone_no",
+  "address",
   "column_break_pswz",
   "requester_email",
+  "organization_website",
   "legal_team_details_section",
-  "member_name",
-  "member_phone_no",
-  "column_break_bgzr",
-  "member_email",
-  "contact_details_section",
-  "name1",
-  "phone_no",
-  "column_break_sryo",
-  "email",
-  "role"
+  "team_members"
  ],
  "fields": [
   {
-   "fieldname": "name1",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Signee Name ",
-   "reqd": 1
-  },
-  {
-   "fieldname": "phone_no",
-   "fieldtype": "Phone",
-   "label": "Phone No. "
-  },
-  {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email",
-   "options": "Email",
-   "reqd": 1
-  },
-  {
    "fieldname": "organization",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Organization/Individual Name",
    "reqd": 1
   },
   {
-   "fieldname": "role",
-   "fieldtype": "Data",
-   "label": "Role"
-  },
-  {
-   "fieldname": "contact_details_section",
-   "fieldtype": "Section Break",
-   "label": "Signee Contact Details"
-  },
-  {
-   "fieldname": "column_break_sryo",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "legal_team_details_section",
    "fieldtype": "Section Break",
-   "label": "Legal Team Member Details"
-  },
-  {
-   "fieldname": "column_break_bgzr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "member_name",
-   "fieldtype": "Data",
-   "label": "Member Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "member_phone_no",
-   "fieldtype": "Phone",
-   "label": "Member Phone No."
-  },
-  {
-   "fieldname": "member_email",
-   "fieldtype": "Data",
-   "label": "Member Email",
-   "reqd": 1
-  },
-  {
-   "fieldname": "requester_details_section",
-   "fieldtype": "Section Break",
-   "label": "Requester Details"
+   "label": "Team Details",
+   "options": "CounterParty Team"
   },
   {
    "fieldname": "requester_email",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Email",
    "options": "Email",
    "reqd": 1
@@ -104,17 +40,35 @@
   {
    "fieldname": "requester_phone_no",
    "fieldtype": "Phone",
+   "in_list_view": 1,
    "label": "Phone No.",
    "reqd": 1
   },
   {
    "fieldname": "column_break_pswz",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "organization_website",
+   "fieldtype": "Data",
+   "label": "Organization Website"
+  },
+  {
+   "fieldname": "team_members",
+   "fieldtype": "Table",
+   "label": "Team Members",
+   "options": "CounterParty Team",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-11 15:00:54.141941",
+ "modified": "2025-04-29 15:54:36.024740",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "CounterParty",
@@ -160,5 +114,5 @@
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "title_field": "name1"
+ "title_field": "organization"
 }

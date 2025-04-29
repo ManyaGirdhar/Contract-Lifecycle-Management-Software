@@ -13,7 +13,7 @@
  "is_standard": 1,
  "message": "<p>Dear {{ doc.requester_name or \"Team\" }},</p>\n\n<p>This is a reminder that the contract titled <strong>{{ doc.title }}</strong> (ID: {{ doc.name }}) is set to expire on <strong>{{ frappe.utils.format_date(doc.end_date, \"d MMMM, yyyy\") }}</strong>.</p>\n\n<p><strong>Only one week is left until expiration.</strong> Please take the necessary action if renewal or closure is required.</p>\n\n<hr>\n\n<h4>Contract Summary</h4>\n\n<ul>\n  <li><strong>Contract ID:</strong> {{ doc.name }}</li>\n  <li><strong>Title:</strong> {{ doc.title }}</li>\n  <li><strong>Status:</strong> {{ doc.workflow_state }}</li>\n  <li><strong>Start Date:</strong> {{ frappe.utils.format_date(doc.effective_date) }}</li>\n  <li><strong>End Date:</strong> {{ frappe.utils.format_date(doc.end_date) }}</li>\n</ul>\n\n<hr>\n\n<p>If you have any questions or need support, please contact the Contract Manager.</p>\n\n<p style=\"font-size: 0.9em; color: #666;\">This is an automated message. Please do not reply to this email.</p>\n",
  "message_type": "Markdown",
- "modified": "2025-04-16 12:26:35.355617",
+ "modified": "2025-04-29 16:16:59.281314",
  "modified_by": "manya@korecent.com",
  "module": "Contract Lifecycle Management",
  "name": "Contract Expiry (one week before)",
@@ -23,7 +23,8 @@
    "receiver_by_document_field": "counterparty_email"
   },
   {
-   "receiver_by_document_field": "signee_email"
+   "receiver_by_document_field": "email,signee",
+   "receiver_by_role": "Signee"
   }
  ],
  "send_system_notification": 1,
