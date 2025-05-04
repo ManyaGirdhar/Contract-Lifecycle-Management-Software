@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto max-w-4xl p-8 bg-[#264e36] shadow-2xl rounded-2xl mt-10 text-slate-100 font-inter">
+  <div class="container mx-auto max-w-4xl p-8 bg-[#8B4513] shadow-2xl rounded-2xl mt-10 text-slate-100 font-inter">
     <h2 class="text-3xl font-bold text-white mb-8 text-center">📄 Submit a Contract Request</h2>
 
     <form @submit.prevent="submitRequest" class="grid grid-cols-1 md:grid-cols-2 gap-8">
