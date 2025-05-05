@@ -1,4 +1,5 @@
-frappe.ready(() => {
+frappe.ready(function() {
+    // Apply custom styling
     const style = document.createElement('style');
     style.innerHTML = `
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
@@ -88,4 +89,6 @@ frappe.ready(() => {
         }
     `;
     document.head.appendChild(style);
+
+    // You can bind other form events below
 });

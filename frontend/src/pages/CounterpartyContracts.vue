@@ -14,7 +14,7 @@
                     <Button
                         size="xl"
                         theme="primary"
-                        class="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#264e36] text-white hover:bg-[#2f5f44]"
+                        class="px-8 py-4 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#8B4513] text-white hover:bg-[#5C4033]"
                         @click="goToRequestForm"
                     >
                         Request Contract
@@ -140,8 +140,8 @@ export default {
         },
 
         goToRequestForm() {
-            this.$router.push("/request-contract");
-        }
+        window.location.href = "https://three-korecent.frappe.cloud/request-contract";
+    }
     }
 };
 </script>

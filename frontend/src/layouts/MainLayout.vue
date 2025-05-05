@@ -1,14 +1,17 @@
 <template>
   <div>
     <Navbar />
+    
 
     <!-- Main page content will be injected here -->
-    <main class="p-4">
+    <main>
       <router-view />
+      <Footer />
     </main>
   </div>
 </template>
 
 <script setup>
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/footer.vue'
 </script>
