@@ -31,6 +31,13 @@ const routes = [
                 name: 'RequestContract',
                 path: 'request-contract',
                 component: () => import('@/pages/RequestContract.vue'),
+            },
+
+            {
+                name: 'ContractVersionDetails',
+                path: 'contract-version/:versionId',
+                component: () => import('@/pages/ContractVersionDetails.vue'),
+                props: true,
             }
         ]
     },

@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen bg-gray-100 flex justify-center p-6">
-      <div class="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6 relative">
+      <div class="w-full max-w-9xl bg-white shadow-lg rounded-lg p-6 relative">
         <div v-if="contract" class="relative mb-4">
           <h1 class="text-3xl font-bold text-gray-800 text-center">
             {{ contract.title || 'Contract Title' }}
@@ -34,7 +34,7 @@
             </button>
   
             <button
-              v-if="['Legal Review', 'In negotiation', 'Modified'].includes(contract.workflow_state)"
+              v-if="['Legal Review', 'In negotiation', 'Modified'].includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
               class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
               @click="updateWorkflowState('Final Approval')"
             >
@@ -67,6 +67,7 @@
                 v-for="version in contractVersions"
                 :key="version.name"
                 class="p-3 bg-gray-50 rounded shadow-sm"
+                @click="goToVersionDetails(version.name)"
               >
                 <p class="text-sm text-gray-700">
                   <strong>Version:</strong> {{ version.name }} |
@@ -77,13 +78,29 @@
               </li>
             </ul>
           </div>
+
+          <button
+  v-if="'Awaiting Signature'.includes(contract.workflow_state) && userRoles.includes('Signee')"
+  class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+  @click="handleSignClick"
+>
+  Sign
+</button>
   
           <button
-            v-if="!['Active', 'Rejected', 'Awaiting Signature'].includes(contract.workflow_state)"
+            v-if="!['Active', 'Rejected', 'Awaiting Signature'].includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
             class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition"
             @click="updateWorkflowState('Rejected')"
           >
             Reject
+          </button>
+
+          <button
+            v-if="'Active'.includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
+            class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            @click="downloadContract"
+          >
+            Download
           </button>
   
           <Comments
@@ -130,20 +147,96 @@
       return {
         contract: null,
         contractVersions: [],
-        showVersions: false // 👈 added toggle state
+        showVersions: false,
+        userRoles: []
       };
     },
   
     mounted() {
+      this.fetchUserRoles();
       this.fetchContract();
     },
   
     methods: {
+      goToVersionDetails(versionName) {
+        this.$router.push(`/contract-version/${versionName}`);
+      },
+
+      async handleSignClick() {
+        try {
+          // Step 1: Get logged-in user's email
+          const userRes = await fetch('/api/method/frappe.auth.get_logged_user', {
+            credentials: 'include'
+          });
+          const userData = await userRes.json();
+          const userEmail = userData.message;
+
+          // Step 2: Get the index of the user in the signee table
+          const signees = this.contract.signee || [];
+          const userIndex = signees.findIndex(row => row.email === userEmail);
+
+          if (userIndex === -1) {
+            alert('You are not listed as a signee for this contract.');
+            return;
+          }
+
+          // Step 3: Extract signing URLs and get the one at the user's index
+          const urlList = (this.contract.signing_url || '').split(',').map(url => url.trim());
+          const signingUrl = urlList[userIndex];
+
+          if (!signingUrl) {
+            alert('No signing URL found for your entry.');
+            return;
+          }
+
+          // Step 4: Open the signing URL in a new tab
+          window.open(signingUrl, '_blank');
+        } catch (error) {
+          console.error('❌ Error handling sign action:', error);
+          alert('An error occurred while retrieving your signing URL.');
+        }
+      },
+
+      async fetchUserRoles() {
+        try {
+          // Get logged-in user's email (user ID)
+          const userRes = await fetch('/api/method/frappe.auth.get_logged_user', {
+            credentials: 'include'
+          });
+          const userData = await userRes.json();
+          const userId = userData.message; // This is usually the email
+
+          // Fetch roles using Frappe's get_roles method
+          const rolesRes = await fetch(`/api/method/frappe.core.doctype.user.user.get_roles?uid=${userId}`, {
+            credentials: 'include'
+          });
+          const rolesData = await rolesRes.json();
+          this.userRoles = rolesData.message || [];
+          this.rolesLoaded = true;
+
+          console.log('✅ User Roles:', this.userRoles);
+        } catch (error) {
+          console.error('❌ Error fetching user roles:', error);
+        }
+      },
+
       async handleComment() {
         if (this.contract.workflow_state === 'Modified') {
           await this.updateWorkflowState('Send Back to Negotiation');
         }
       },
+
+      downloadContract() {
+    if (this.contract && this.contract.download_url) {
+      const link = document.createElement('a');
+      link.href = this.contract.download_url;
+      link.download = ''; // Optional: specify filename if needed
+      link.target = '_blank'; // Optional: open in new tab if it's a viewable file
+      link.click();
+    } else {
+      alert('Download URL not available.');
+    }
+  },
   
       async fetchContract() {
         const contractName = this.$route.params.name;

@@ -288,7 +288,7 @@
   },
   {
    "fieldname": "signing_url",
-   "fieldtype": "Data",
+   "fieldtype": "Long Text",
    "label": "Signing URL",
    "read_only": 1
   },
@@ -347,7 +347,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-29 16:03:46.172052",
+ "modified": "2025-05-05 14:45:46.448460",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
@@ -410,6 +410,18 @@
    "report": 1,
    "role": "CounterParty Legal Team",
    "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Signee",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

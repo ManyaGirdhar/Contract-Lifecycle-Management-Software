@@ -1,13 +1,27 @@
 <template>
   <div class="mt-8 border-t pt-4">
     <h2 class="text-xl font-semibold mb-3 text-gray-800">Comments</h2>
+    <!-- Add Comment -->
+    <textarea
+      v-model="newComment"
+      rows="3"
+      class="w-full max-w-4xl border p-2 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+      placeholder="Add a comment..."
+    ></textarea>
+    <br>
+    <button
+      @click="postComment"
+      :disabled="isPosting"
+      class="bg-blue-600 text-white px-2 py-1 text-sm rounded-md hover:bg-blue-700 disabled:opacity-50 my-3"
+    >
+      {{ isPosting ? 'Posting...' : 'Post Comment' }}
+    </button>
 
-    <!-- Comments List -->
     <div v-if="comments.length">
       <div
         v-for="comment in comments"
         :key="comment.name"
-        class="mb-4 p-4 bg-white border rounded shadow-sm"
+        class="mb-4 p-4 bg-white border rounded shadow-sm max-w-4xl"
       >
         <p class="text-sm font-medium text-blue-700 mb-1">
           {{ comment.owner }}
@@ -21,21 +35,6 @@
       </div>
     </div>
     <div v-else class="text-gray-500 text-sm mb-4">No comments yet.</div>
-
-    <!-- Add Comment -->
-    <textarea
-      v-model="newComment"
-      rows="3"
-      class="w-full border p-2 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-      placeholder="Add a comment..."
-    ></textarea>
-    <button
-      @click="postComment"
-      :disabled="isPosting"
-      class="bg-blue-600 text-white px-2 py-1 text-sm rounded-md hover:bg-blue-700 disabled:opacity-50"
-    >
-      {{ isPosting ? 'Posting...' : 'Post Comment' }}
-    </button>
   </div>
 </template>
 
