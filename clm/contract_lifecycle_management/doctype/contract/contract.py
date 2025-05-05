@@ -46,10 +46,16 @@ class Contract(WebsiteGenerator):
 		counterparty_doc.save(ignore_permissions=True)
 
 	def create_user_with_role(self):
-		# Create user for Legal Team Member
+    # Handle Legal Team Members
 		for member in self.legal_team:
-			if member.email and not frappe.db.exists("User", member.email):
-				# if member.role == "Legal Team Member":
+			if member.email:
+				if frappe.db.exists("User", member.email):
+					user = frappe.get_doc("User", member.email)
+					existing_roles = [r.role for r in user.roles]
+					if "CounterParty Legal Team" not in existing_roles:
+						user.append("roles", {"role": "CounterParty Legal Team"})
+						user.save(ignore_permissions=True)
+				else:
 					user = frappe.get_doc({
 						"doctype": "User",
 						"email": member.email,
@@ -59,8 +65,17 @@ class Contract(WebsiteGenerator):
 						"user_type": "Website User"
 					})
 					user.insert(ignore_permissions=True)
+
+		# Handle Signees
 		for mem in self.signee:
-			if mem.email and not frappe.db.exists("User", mem.email):
+			if mem.email:
+				if frappe.db.exists("User", mem.email):
+					user = frappe.get_doc("User", mem.email)
+					existing_roles = [r.role for r in user.roles]
+					if "Signee" not in existing_roles:
+						user.append("roles", {"role": "Signee"})
+						user.save(ignore_permissions=True)
+				else:
 					user = frappe.get_doc({
 						"doctype": "User",
 						"email": mem.email,
@@ -70,7 +85,6 @@ class Contract(WebsiteGenerator):
 						"user_type": "Website User"
 					})
 					user.insert(ignore_permissions=True)
-
 
 
 	# @staticmethod
