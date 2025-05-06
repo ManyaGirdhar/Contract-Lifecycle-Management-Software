@@ -1,6 +1,7 @@
 <template>
   <div class="mt-8 border-t pt-4">
     <h2 class="text-xl font-semibold mb-3 text-gray-800">Comments</h2>
+
     <!-- Add Comment -->
     <textarea
       v-model="newComment"
@@ -8,7 +9,7 @@
       class="w-full max-w-4xl border p-2 rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
       placeholder="Add a comment..."
     ></textarea>
-    <br>
+    <br />
     <button
       @click="postComment"
       :disabled="isPosting"
@@ -17,20 +18,38 @@
       {{ isPosting ? 'Posting...' : 'Post Comment' }}
     </button>
 
+    <!-- Comments List -->
     <div v-if="comments.length">
       <div
         v-for="comment in comments"
         :key="comment.name"
-        class="mb-4 p-4 bg-white border rounded shadow-sm max-w-4xl"
+        class="mb-4 max-w-9xl flex"
+        :class="comment.owner === currentUser ? 'justify-end' : 'justify-start'"
       >
-        <p class="text-sm font-medium text-blue-700 mb-1">
-          {{ comment.owner }}
-        </p>
-        <div class="pl-4 border-l-2 border-blue-300">
-          <div class="text-gray-800 text-base" v-html="comment.content"></div>
-          <p class="text-xs text-gray-500 mt-1">
-            {{ formatDate(comment.creation) }}
+        <div
+          class="p-4 border rounded shadow-sm"
+          :class="[
+            comment.owner === currentUser
+              ? 'bg-green-100 text-right border-green-300'
+              : 'bg-gray-100 text-left border-gray-300',
+            'max-w-sm w-full'
+          ]"
+        >
+          <p
+            class="text-sm font-medium mb-1"
+            :class="comment.owner === currentUser ? 'text-green-800' : 'text-blue-700'"
+          >
+          {{ comment.owner === currentUser ? 'You' : comment.owner }}
           </p>
+          <div
+            class="pl-2 border-l-2"
+            :class="comment.owner === currentUser ? 'border-green-400' : 'border-blue-300'"
+          >
+            <div class="text-gray-800 text-base" v-html="comment.content"></div>
+            <p class="text-xs text-gray-500 mt-1">
+              {{ formatDate(comment.creation) }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -50,12 +69,15 @@ const props = defineProps({
 const comments = ref([]);
 const newComment = ref('');
 const isPosting = ref(false);
+const currentUser = ref('');
 
+// Fetch comments
 const fetchComments = async () => {
   try {
-    const url = `/api/resource/Comment?fields=["name","content","owner","creation"]&filters=[["reference_doctype","=","${props.doctype}"],["reference_name","=","${props.docname}"],["comment_type", "=", "Comment"]]&order_by=creation desc&_=${Date.now()}`;
+    const url = `/api/resource/Comment?fields=["name","content","owner", "creation"]&filters=[["reference_doctype","=","${props.doctype}"],["reference_name","=","${props.docname}"],["comment_type", "=", "Comment"]]&order_by=creation desc&_=${Date.now()}`;
     const res = await fetch(url);
     const data = await res.json();
+    console.log(data);
     comments.value = data.data || data.message || [];
   } catch (err) {
     console.error('Error fetching comments:', err);
@@ -63,6 +85,7 @@ const fetchComments = async () => {
   }
 };
 
+// Post new comment
 const postComment = async () => {
   if (!newComment.value.trim()) return;
 
@@ -79,15 +102,16 @@ const postComment = async () => {
         comment_type: 'Comment',
         reference_doctype: props.doctype,
         reference_name: props.docname,
-        content: commentText
+        content: commentText,
+        // comment_by: 
       })
     });
 
     const result = await res.json();
 
     if (res.ok && result.data) {
-      newComment.value = ''; // ✅ Clear textarea
-      await fetchComments(); // ✅ Reload comments
+      newComment.value = '';
+      await fetchComments();
       emit('comment-added');
     } else {
       console.error('Post failed:', result);
@@ -101,12 +125,29 @@ const postComment = async () => {
   }
 };
 
+// Format timestamp
 const formatDate = (dateStr) =>
   new Date(dateStr).toLocaleString('en-GB', {
     dateStyle: 'medium',
     timeStyle: 'short'
   });
 
-onMounted(fetchComments);
+// Get current logged-in user
+const getCurrentUser = async () => {
+  try {
+    const res = await fetch('/api/method/frappe.auth.get_logged_user');
+    const data = await res.json();
+    console.log(data);
+    currentUser.value = data.message;
+  } catch (err) {
+    console.error('Failed to get current user:', err);
+  }
+};
+
+// Initialize
+onMounted(() => {
+  fetchComments();
+  getCurrentUser();
+});
 watch(() => props.docname, fetchComments);
 </script>

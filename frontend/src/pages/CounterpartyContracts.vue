@@ -8,7 +8,7 @@
                     <input v-model="searchQuery" type="text" placeholder="🔍 Search"
                         class="px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500" />
                     <Button theme="primary"
-                        class="px-8 py-5 text-lg font-semibold shadow-md hover:shadow-lg transition bg-[#264e36] text-white hover:bg-[#2f5f44]"
+                        class="px-4 py-1 border border-[#8B4513] rounded-md text-white bg-[#8B4513] font-semibold transition duration-200 hover:bg-white hover:text-[#8B4513]"
                         @click="goToRequestForm">
                         Request Contract
                     </Button>
@@ -19,7 +19,7 @@
                 <li v-for="contract in filteredContracts" :key="contract.name"
                     class="bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm flex justify-between items-center cursor-pointer hover:bg-blue-100 transition"
                     @click="goToContract(contract.name)">
-                    <span class="text-lg font-semibold text-gray-700">{{ contract.name }}</span>
+                    <span class="text-lg font-semibold text-gray-700">{{ contract.title }}</span>
                     <span class="px-3 py-1 text-sm font-medium rounded-full" :class="{
                         'bg-green-200 text-green-800': contract.workflow_state === 'Active',
                         'bg-red-200 text-red-800': contract.workflow_state === 'Rejected'
@@ -28,6 +28,7 @@
                     </span>
                 </li>
             </ul>
+
 
             <p v-else class="text-gray-600 text-center">No contracts match your search.</p>
         </div>

@@ -61,31 +61,40 @@
   
           <!-- CONTRACT VERSIONS -->
           <div v-if="showVersions && contractVersions.length" class="mt-6">
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">Contract Versions</h2>
-            <ul class="space-y-2">
-              <li
-                v-for="version in contractVersions"
-                :key="version.name"
-                class="p-3 bg-gray-50 rounded shadow-sm"
-                @click="goToVersionDetails(version.name)"
-              >
-                <p class="text-sm text-gray-700">
-                  <strong>Version:</strong> {{ version.name }} |
-                  <strong>Created:</strong>
-                  {{ version.created_on ? new Date(version.created_on.replace(' ', 'T')).toLocaleString() : 'N/A' }}
-                </p>
-                <div v-html="version.content" class="prose max-w-none mt-2 text-sm"></div>
-              </li>
-            </ul>
-          </div>
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Contract Versions</h2>
+          <ul class="space-y-4">
+            <li
+              v-for="version in contractVersions"
+              :key="version.name"
+              class="bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm cursor-pointer hover:bg-blue-100 transition"
+              @click="goToVersionDetails(version.name, contract.name)"
+            >
+              <div class="flex justify-between items-start">
+                <div class="text-gray-700 flex">
+                  <span class="text-lg font-semibold text-gray-700">Version: {{ version.name }}</span>
+                  <!-- <p class="text-md font-semibold">
+                    Version: {{ version.name }}
+                  </p> -->
+                  <span class="ml-auto px-3 py-1 text-sm font-medium rounded-full bg-gray-200 text-gray-700">
+                    Created: {{ version.created_on ? new Date(version.created_on.replace(' ', 'T')).toLocaleString() : 'N/A' }}
+                  </span>
+                  <!-- <p class="text-sm">
+                    Created: {{ version.created_on ? new Date(version.created_on.replace(' ', 'T')).toLocaleString() : 'N/A' }}
+                  </p> -->
+                </div>
+              </div>
+              <div v-html="version.content" class="prose max-w-none mt-2 text-sm"></div>
+            </li>
+          </ul>
+        </div>
 
           <button
-  v-if="'Awaiting Signature'.includes(contract.workflow_state) && userRoles.includes('Signee')"
-  class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
-  @click="handleSignClick"
->
-  Sign
-</button>
+            v-if="'Awaiting Signature'.includes(contract.workflow_state) && userRoles.includes('Signee')"
+            class="absolute bottom-6 right-6 px-3 py-1 text-sm bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+            @click="handleSignClick"
+          >
+            Sign
+          </button>
   
           <button
             v-if="!['Active', 'Rejected', 'Awaiting Signature'].includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
@@ -158,8 +167,8 @@
     },
   
     methods: {
-      goToVersionDetails(versionName) {
-        this.$router.push(`/contract-version/${versionName}`);
+      goToVersionDetails(versionName, contractName) {
+        this.$router.push(`${contractName}/contract-version/${versionName}`);
       },
 
       async handleSignClick() {
