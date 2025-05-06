@@ -9,7 +9,7 @@ def fetch_contracts(user_email, user_roles):
         user_roles = json.loads(user_roles)
 
     allowed_states = [
-        "In negotiation",
+        "In Negotiation",
         "Legal Review",
         "Modified",
         "Final Approval",

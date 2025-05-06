@@ -26,7 +26,7 @@
             </span>
   
             <button
-              v-if="contract.workflow_state === 'In negotiation'"
+              v-if="contract.workflow_state === 'In Negotiation'"
               class="px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600 transition"
               @click="updateWorkflowState('Send to Legal')"
             >
@@ -34,7 +34,7 @@
             </button>
   
             <button
-              v-if="['Legal Review', 'In negotiation', 'Modified'].includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
+              v-if="['Legal Review', 'In Negotiation', 'Modified'].includes(contract.workflow_state) && ['CounterParty', 'Signee'].some(role => userRoles.includes(role))"
               class="px-3 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition"
               @click="updateWorkflowState('Final Approval')"
             >
