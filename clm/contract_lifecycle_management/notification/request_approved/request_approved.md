@@ -123,7 +123,7 @@
     </div>
     <div class="phase">
       <div class="circle">3</div>
-      <span>In negotiation</span>
+      <span>In Negotiation</span>
     </div>
     <div class="phase">
       <div class="circle">4</div>
