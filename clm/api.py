@@ -23,7 +23,7 @@ def fetch_contracts(user_email, user_roles):
 
     contracts = frappe.get_all("Contract", 
         filters={"workflow_state": ["in", allowed_states]},
-        fields=["name", "workflow_state", "counterparty_email"]
+        fields=["name", "workflow_state", "counterparty_email", "title"]
     )
 
     for contract in contracts:
@@ -36,6 +36,7 @@ def fetch_contracts(user_email, user_roles):
         if is_counterparty and doc.counterparty_email == user_email:
             results.append({
                 "name": doc.name,
+                "title": doc.title,
                 "workflow_state": doc.workflow_state,
                 "counterparty_email": doc.counterparty_email,
                 "legal_member_email": None,
@@ -47,6 +48,7 @@ def fetch_contracts(user_email, user_roles):
             if user_in_legal_team:
                 results.append({
                     "name": doc.name,
+                    "title": doc.title,
                     "workflow_state": doc.workflow_state,
                     "counterparty_email": doc.counterparty_email,
                     "legal_member_email": user_email,
@@ -58,6 +60,7 @@ def fetch_contracts(user_email, user_roles):
             if user_in_signee:
                 results.append({
                     "name": doc.name,
+                    "title": doc.title,
                     "workflow_state": doc.workflow_state,
                     "counterparty_email": doc.counterparty_email,
                     "legal_member_email": None,

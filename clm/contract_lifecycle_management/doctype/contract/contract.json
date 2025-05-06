@@ -25,7 +25,6 @@
   "column_break_izzq",
   "counterparty_email",
   "section_break_xuvx",
-  "team_member_details",
   "legal_team",
   "signee",
   "contract_period_details_section",
@@ -111,6 +110,7 @@
    "in_list_view": 1,
    "label": "CounterParty",
    "options": "CounterParty",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -119,7 +119,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "CounterParty Email",
-   "options": "Email"
+   "options": "Email",
+   "read_only": 1
   },
   {
    "fieldname": "contract_term",
@@ -316,12 +317,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "team_member_details",
-   "fieldtype": "Table",
-   "label": "Team Member Details",
-   "options": "Team Member"
-  },
-  {
    "fieldname": "column_break_izzq",
    "fieldtype": "Column Break"
   },
@@ -347,7 +342,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-05 14:45:46.448460",
+ "modified": "2025-05-06 10:50:06.736327",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",

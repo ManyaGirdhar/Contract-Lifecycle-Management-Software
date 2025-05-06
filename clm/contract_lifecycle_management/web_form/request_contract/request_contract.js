@@ -90,5 +90,28 @@ frappe.ready(function() {
     `;
     document.head.appendChild(style);
 
+    const loggedInUser = frappe.session.user;
+    console.log(loggedInUser);
+    // frappe.web_form.set_value('requester_name', frappe.session.full_name);
+
+    // Set requester email
+    frappe.web_form.set_value('requester_email', "");
+
+    // Fetch full name using frappe call (frappe.session.user doesn't contain full_name directly)
+    frappe.call({
+        method: 'frappe.client.get',
+        args: {
+            doctype: 'User',
+            name: loggedInUser
+        },
+        callback: function (r) {
+            if (r.message && r.message.full_name) {
+                console.log(r.message);
+                frappe.web_form.set_value('requester_name', r.message.full_name);
+                frappe.web_form.set_value('requester_email', r.message.name);
+            }
+        }
+    });
+
     // You can bind other form events below
 });

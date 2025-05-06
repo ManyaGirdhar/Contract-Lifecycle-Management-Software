@@ -18,9 +18,9 @@
       <RouterLink to="/" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#8B4513]">
         Home
       </RouterLink>
-      <RouterLink to="https://three-korecent.frappe.cloud/request-contract" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#8B4513]">
+      <a href="https://three-korecent.frappe.cloud/request-contract" target="_blank" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#8B4513]">
         Request Contract
-      </RouterLink>
+      </a>
       <RouterLink to="/counterpartycontracts" class="transform transition duration-200 hover:-translate-y-1 hover:scale-105 hover:text-[#8B4513]">
         Contracts
       </RouterLink>

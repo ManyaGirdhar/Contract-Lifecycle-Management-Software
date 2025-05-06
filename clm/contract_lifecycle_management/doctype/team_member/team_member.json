@@ -16,33 +16,37 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "First Name"
+   "label": "First Name",
+   "reqd": 1
   },
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Last Name"
+   "label": "Last Name",
+   "reqd": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
-   "options": "Email"
+   "options": "Email",
+   "reqd": 1
   },
   {
    "fieldname": "role",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Role",
-   "options": "Legal Team Member\nSignee"
+   "options": "Legal Team Member\nSignee",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-04-30 11:07:06.066508",
+ "modified": "2025-05-05 22:19:11.324284",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Team Member",

@@ -272,7 +272,7 @@ def summarize_contract_text(name):
 
 		model = genai.GenerativeModel("gemini-1.5-pro-latest")
 		prompt = f"""
-				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
+				You are a contract summarization assistant. Provide a professional and concise summary in bullet points of the following contract:
 
 				Contract Name: {doc.name}
 				Contract Type: {doc.contract_type}
