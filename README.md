@@ -1,100 +1,113 @@
-# 📝 Contract Lifecycle Manager (CLM)
+<p align="center">
+  <img src=".github/smartcontract_logo.png" width="120" alt="SMARTContract Logo" />
+</p>
 
-A **Frappe-based application** that simplifies and automates the entire contract lifecycle — from request to signature — enabling **seamless collaboration** between Contract Managers and Counterparties.
+<h1 align="center">SMARTContract</h1>
+
+<p align="center">
+  <b>Intelligent Contract Lifecycle Management Software</b><br/>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/blob/main/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />
+  </a>
+  <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions">
+    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/ManyaGirdhar/Contract-Lifecycle-Management-Software/main.yml?label=CI" />
+  </a>
+</p>
+
+<p align="center">
+  <img src=".github/i1.png" alt="Dashboard Screenshot"/>
+</p>
 
 ---
 
-![CLM Banner](.github/i1.png)  
-<sub>*Visual suggestion: Add a high-level dashboard or contract flow concept here*</sub>
+## 🔗 Links
+
+- 🌐 **Website**: [three-korecent.frappe.cloud/frontend](https://three-korecent.frappe.cloud/frontend/)
+- 📄 **Documentation**: [View Full Docs (Google Doc)](https://docs.google.com/document/d/1KKku3XUqWi8XfIwr5-n5skCW8oetQCLW6b95e3SczRs/edit?usp=sharing)
+- ✍️ **Documenso Integration GitHub Repo**: [Documenso Integration →](https://github.com/ManyaGirdhar/Documenso-Integration.git)
 
 ---
 
 ## 🚀 Features
 
-### 🔐 Role-Based Access Control
-
-- 👩‍💼 **Contract Manager**  
-  Manage workflows, templates, and approvals with full access to the Frappe Desk.
-
-- 🧑‍💻 **Counterparty**  
-  Submit requests, negotiate terms, and track contract status through a dedicated UI portal.
-
----
-
-### 🌀 Contract Workflow Stages
-
-> **Request** → **Draft** → **Approved** → **In Negotiation** → **Legal Review** → **Modified** → **Final Approval** → **Negotiated** → **Awaiting Signature** → **Active** → **Expired** → **Rejected**
+- 🔐 **Role-Based Access** — Separate flows for Contract Managers & Counterparties  
+- 🔁 **Lifecycle Workflow** — Request → Review → Negotiate → Finalize → Sign → Expire  
+- 📣 **Smart Notifications** — Stay informed across contract stages  
+- 💬 **Real-Time Collaboration** — Inline discussion & change history  
+- 🧠 **Gemini AI Integration** — Instant contract summaries and critical insights  
+- 📜 **Version Control** — Track every redline and revision transparently  
+- ✍️ **Documenso Integration** — Sign documents securely with open-source eSign  
+- 🌐 **Intuitive UI** — Frappe Desk + Dedicated Frontend Portal  
 
 ---
 
-### 📣 Smart Notifications
+## 🧠 Gemini AI Contract Insights
 
-- Automated alerts triggered at every key stage  
-- Notifies requesters, legal teams, and signees to take timely actions
-
----
-
-### 💬 Real-Time Collaboration
-
-- Inline comments and discussion threads  
-- Contract redlining and change proposals with live updates
+- Automatically summarize contract terms  
+- Highlight risky clauses or missing standard provisions  
+- Improve turnaround time and comprehension  
 
 ---
 
-### 🧠 Gemini AI Integration
+## 🔁 Contract Lifecycle Workflow
 
-- Intelligent **contract summarization** for both parties  
-- Quick insights into critical clauses and terms
+- Request → Draft → Approved → In Negotiation → Legal Review → Modified → Final Approval → Negotiated → Awaiting Signature → Active → Expired / Rejected
 
----
-
-### 📜 Version Control
-
-- Transparent **change tracking**  
-- Full visibility of edits, redlines, and approvals
+<p align="center">
+  <img src=".github/i2.png" alt="Contract Lifecycle Workflow"/>
+</p>
 
 ---
 
-### ✍️ Documenso Integration
+## 📑 Contract Dashboard
 
-- Sign contracts **anytime, anywhere** with secure digital signature support
+A centralized dashboard to manage and view all your contracts, their statuses, and actions.
 
----
-
-## 🌐 User Interface
-
-### 🔸 Counterparty Portal
-
-> *A minimal, intuitive portal where counterparties can view contract lists, track status, initiate negotiations, and leave comments.*
+<p align="center">
+  <img src=".github/i3.png" alt="Contract List Page"/>
+</p>
 
 ---
 
-### 🔹 Contract Manager Desk
+## 📄 Version History
 
-> Full access through the Frappe Desk UI to manage all aspects of the contract lifecycle.
+Keep track of all changes made during negotiations with transparent redlining and revision history.
 
-![Contract Manager Desk](docs/images/contract-manager-desk.png)  
-![Contracts List](.github/i3.png)  
-![Contract Versions](.github/i4.png)  
-<sub>*Screenshots showcase contract workflows, statuses, and version history.*</sub>
+<p align="center">
+  <img src=".github/i4.png" alt="Contract Version History"/>
+</p>
 
 ---
 
-## 🛠️ Installation Guide
+## ✍️ Documenso Integration
+
+This project includes [Documenso](https://github.com/ManyaGirdhar/Documenso-Integration.git), an open-source alternative to DocuSign for signing contracts digitally.  
+You need to install our standalone app for documenso [Click here to install!](https://github.com/ManyaGirdhar/Documenso-Integration.git).
+
+- Seamless in-app signing  
+- Audit trails and document security  
+- Webhook-ready and customizable  
+
+---
+
+## 🛠️ Installation
 
 ```bash
-# Initialize the bench
+# Create a new bench
 bench init frappe-bench
 cd frappe-bench
 
-# Get the CLM app
-bench get-app clm https://github.com/yourusername/clm.git
+# Get the SMARTContract app
+bench get-app https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software.git
 
-# Create a new site
-bench new-site clm.localhost
+# Create site
+bench new-site <yoursitename>
 
-# Install the app
-bench --site clm.local install-app clm
+# Install app
+bench --site <yoursitename> install-app clm
 
-# Start the Frappe development server
+# Start development server
 bench start
