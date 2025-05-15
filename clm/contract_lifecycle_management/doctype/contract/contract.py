@@ -7,7 +7,7 @@ import frappe
 import difflib
 # from dotenv import load_dotenv
 from bs4 import BeautifulSoup
-import google.generativeai as genai
+# import google.generativeai as genai
 from frappe.utils import add_months, nowdate, get_datetime_str, get_date_str
 from frappe.website.website_generator import WebsiteGenerator
 
@@ -259,41 +259,41 @@ def get_contract_template(contract_type):
 	
 	return template
 
-@frappe.whitelist()
-def summarize_contract_text(name):
-	try:
+# @frappe.whitelist()
+# def summarize_contract_text(name):
+# 	try:
 
-		api_key = os.getenv("GEMINI_API_KEY")
-		if not api_key:
-			return "API key not found in environment."
+# 		api_key = os.getenv("GEMINI_API_KEY")
+# 		if not api_key:
+# 			return "API key not found in environment."
 
-		genai.configure(api_key=api_key)
-		doc = frappe.get_doc("Contract", name)
+# 		genai.configure(api_key=api_key)
+# 		doc = frappe.get_doc("Contract", name)
 
-		model = genai.GenerativeModel("gemini-1.5-pro-latest")
-		prompt = f"""
-				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
+# 		model = genai.GenerativeModel("gemini-1.5-pro-latest")
+# 		prompt = f"""
+# 				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
 
-				Contract Name: {doc.name}
-				Contract Type: {doc.contract_type}
-				Effective Date: {doc.contract_effective_date}
-				End Date: {doc.contract_end_date}
-				Duration: {doc.contract_duration} month(s)
-				Workflow State: {doc.workflow_state}
-				Amount to Receive: {doc.amount_to_receive}
-				Tax: {doc.tax}%
-				Total Amount: {doc.total_amount}
+# 				Contract Name: {doc.name}
+# 				Contract Type: {doc.contract_type}
+# 				Effective Date: {doc.contract_effective_date}
+# 				End Date: {doc.contract_end_date}
+# 				Duration: {doc.contract_duration} month(s)
+# 				Workflow State: {doc.workflow_state}
+# 				Amount to Receive: {doc.amount_to_receive}
+# 				Tax: {doc.tax}%
+# 				Total Amount: {doc.total_amount}
 
-				Contract Content:
-				{doc.content}
+# 				Contract Content:
+# 				{doc.content}
 
-				Focus on explaining the purpose of the contract, key dates, financial details, and any important clauses found in the content.
-				"""
-		response = model.generate_content(prompt)
+# 				Focus on explaining the purpose of the contract, key dates, financial details, and any important clauses found in the content.
+# 				"""
+# 		response = model.generate_content(prompt)
 
-		return response.text if hasattr(response, "text") else "Summary not available."
+# 		return response.text if hasattr(response, "text") else "Summary not available."
 
-	except Exception as e:
-		# Log the error in Frappe and return a message
-		frappe.log_error(frappe.get_traceback(), "Contract Summarization Error")
-		return f"Error occurred: {str(e)}"
+# 	except Exception as e:
+# 		# Log the error in Frappe and return a message
+# 		frappe.log_error(frappe.get_traceback(), "Contract Summarization Error")
+# 		return f"Error occurred: {str(e)}"
