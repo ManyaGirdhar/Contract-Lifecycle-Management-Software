@@ -9,15 +9,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/blob/main/LICENSE">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />
-  </a>
-  <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions">
-    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/ManyaGirdhar/Contract-Lifecycle-Management-Software/main.yml?label=CI" />
-  </a>
-</p>
-
-<p align="center">
   <img src=".github/i1.png" alt="Dashboard Screenshot"/>
 </p>
 
