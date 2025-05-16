@@ -12,9 +12,9 @@
   <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/blob/main/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
-  <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions">
+  <!-- <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions">
     <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/ManyaGirdhar/Contract-Lifecycle-Management-Software/main.yml?label=CI" />
-  </a>
+  </a> -->
 </p>
 
 <p align="center">
@@ -102,12 +102,14 @@ cd frappe-bench
 
 # Get the SMARTContract app
 bench get-app https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software.git
+bench get-app https://github.com/ManyaGirdhar/Documenso-Integration.git
 
 # Create site
 bench new-site <yoursitename>
 
 # Install app
 bench --site <yoursitename> install-app clm
+bench --site <yoursitename> install-app documenso_integration
 
 # Start development server
 bench start
