@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/smartcontract_logo.png" width="120" alt="SMARTContract Logo" />
+  <img src=".github/smartcontract_dark_bg_logo.png" width="120" alt="SMARTContract Logo" />
 </p>
 
 <h1 align="center">SMARTContract</h1>
