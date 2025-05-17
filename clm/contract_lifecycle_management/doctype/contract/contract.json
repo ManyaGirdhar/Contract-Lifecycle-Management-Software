@@ -81,10 +81,10 @@
   },
   {
    "fieldname": "contract_type",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Contract Type",
-   "options": "Select\nEmployment Contract\nBusiness & Commercial Contract\nService Contract\nReal Estate Contract\nFinancial Contract\nConfidentiality & Non-Disclosure Contract\nSales & Marketing Contract\nIntellectual Property Contract\nInvestment & Partnership Contract\nLegal & Government Contract",
+   "options": "Contract Content",
    "reqd": 1
   },
   {
@@ -342,7 +342,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-06 10:50:06.736327",
+ "modified": "2025-05-17 23:20:18.493719",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
