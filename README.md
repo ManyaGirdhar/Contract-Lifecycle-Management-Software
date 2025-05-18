@@ -12,11 +12,23 @@
   <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/blob/main/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg" />
   </a>
-  <!-- <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions"> -->
-  <!-- <a href="https://github.com/ManyaGirdhar/Contract-Lifecycle-Management-Software/actions">
-    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/ManyaGirdhar/Contract-Lifecycle-Management-Software/main.yml?label=CI" />
-  </a>
-  </a> -->
+</p>
+
+## 📊 Project Flow Overview
+
+<p align="center">
+  <img src=".github/flow1.png" width="280" alt="Step 1" />
+  <br/>
+</p>
+
+<p align="center">
+  <img src=".github/flow2.png" width="280" alt="Step 2" />
+  <br/>
+</p>
+
+<p align="center">
+  <img src=".github/flow3.png" width="280" alt="Step 3" />
+  <br/>
 </p>
 
 <p align="center">
