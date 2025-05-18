@@ -50,11 +50,7 @@
   "route",
   "is_published",
   "documenso_data_section",
-  "document_id",
-  "upload_url",
-  "recipient_id",
-  "signing_url",
-  "download_url"
+  "documenso_id"
  ],
  "fields": [
   {
@@ -110,7 +106,6 @@
    "in_list_view": 1,
    "label": "CounterParty",
    "options": "CounterParty",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -119,8 +114,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "CounterParty Email",
-   "options": "Email",
-   "read_only": 1
+   "options": "Email"
   },
   {
    "fieldname": "contract_term",
@@ -249,25 +243,7 @@
   {
    "fieldname": "documenso_data_section",
    "fieldtype": "Section Break",
-   "label": "Documenso Data"
-  },
-  {
-   "fieldname": "document_id",
-   "fieldtype": "Data",
-   "label": "Document ID",
-   "read_only": 1
-  },
-  {
-   "fieldname": "upload_url",
-   "fieldtype": "Long Text",
-   "label": "Upload URL",
-   "read_only": 1
-  },
-  {
-   "fieldname": "recipient_id",
-   "fieldtype": "Data",
-   "label": "Recipient ID",
-   "read_only": 1
+   "label": "E-Signature Information"
   },
   {
    "fieldname": "current_version",
@@ -288,12 +264,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "signing_url",
-   "fieldtype": "Long Text",
-   "label": "Signing URL",
-   "read_only": 1
-  },
-  {
    "depends_on": "eval:doc.contract_term == \"Indefinite\"",
    "fieldname": "termination_clause_summary",
    "fieldtype": "Text",
@@ -309,12 +279,6 @@
    "fieldname": "is_payment_involved",
    "fieldtype": "Check",
    "label": "Is Payment Involved?"
-  },
-  {
-   "fieldname": "download_url",
-   "fieldtype": "Small Text",
-   "label": "Download URL",
-   "read_only": 1
   },
   {
    "fieldname": "column_break_izzq",
@@ -335,6 +299,13 @@
    "fieldtype": "Table",
    "label": "Signee",
    "options": "Signee"
+  },
+  {
+   "fieldname": "documenso_id",
+   "fieldtype": "Link",
+   "label": "Documenso ID",
+   "options": "API Information",
+   "read_only": 1
   }
  ],
  "has_web_view": 1,
@@ -342,7 +313,7 @@
  "is_published_field": "is_published",
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-17 23:20:18.493719",
+ "modified": "2025-05-18 14:35:40.037761",
  "modified_by": "Administrator",
  "module": "Contract Lifecycle Management",
  "name": "Contract",
