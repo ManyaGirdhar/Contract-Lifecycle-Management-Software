@@ -17,17 +17,17 @@
 ## 📊 Project Flow Overview
 
 <p align="center">
-  <img src=".github/flow1.png" width="280" alt="Step 1" />
+  <img src=".github/flow1.png" alt="Step 1" />
   <br/>
 </p>
 
 <p align="center">
-  <img src=".github/flow2.png" width="280" alt="Step 2" />
+  <img src=".github/flow2.png" alt="Step 2" />
   <br/>
 </p>
 
 <p align="center">
-  <img src=".github/flow3.png" width="280" alt="Step 3" />
+  <img src=".github/flow3.png" alt="Step 3" />
   <br/>
 </p>
 
