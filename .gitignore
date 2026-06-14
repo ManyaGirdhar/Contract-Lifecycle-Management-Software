@@ -7,3 +7,5 @@ node_modules
 __pycache__
 package-lock.json
 frontend/package-lock.json
+clm/public/frontend/
+clm/www/frontend.html

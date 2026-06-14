@@ -82,7 +82,7 @@ jobs:
       - name: Setup
         run: |
           pip install frappe-bench
-          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
+          bench init --skip-redis-config-generation --skip-assets --frappe-branch version-15 --python "$(which python)" ~/frappe-bench
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
 
@@ -90,8 +90,10 @@ jobs:
         working-directory: /home/runner/frappe-bench
         run: |
           bench get-app clm $GITHUB_WORKSPACE
+          bench get-app https://github.com/ManyaGirdhar/Documenso-Integration.git
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
+          bench --site test_site install-app documenso_integration
           bench --site test_site install-app clm
           bench build
         env:
