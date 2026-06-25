@@ -13,7 +13,8 @@ def fetch_contracts():
         "Negotiated",
         "Awaiting Signature",
         "Active",
-        "Rejected"
+        "Rejected",
+        "Expired"
     ]
 
     results = []
