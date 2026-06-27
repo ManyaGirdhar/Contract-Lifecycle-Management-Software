@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-06-27 00:23:24.673535",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "base_url",
+  "api_key",
+  "webhook_secret"
+ ],
+ "fields": [
+  {
+   "fieldname": "base_url",
+   "fieldtype": "Data",
+   "label": "Base URL"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "fieldname": "webhook_secret",
+   "fieldtype": "Password",
+   "label": "Webhook Secret"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-06-27 00:24:13.769122",
+ "modified_by": "Administrator",
+ "module": "Contract Lifecycle Management",
+ "name": "Documenso Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
