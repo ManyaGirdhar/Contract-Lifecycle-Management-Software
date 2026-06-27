@@ -7,6 +7,15 @@ from frappe.utils import add_months, nowdate
 
 class TestContract(FrappeTestCase):
 	def setUp(self):
+		# Create a test Contract Content if it doesn't exist
+		if not frappe.db.exists("Contract Content", "Confidentiality & Non-Disclosure Contract"):
+			self.template = frappe.get_doc({
+				"doctype": "Contract Content",
+				"contract_type": "Confidentiality & Non-Disclosure Contract",
+				"content": "<p>Test template content</p>"
+			})
+			self.template.insert(ignore_permissions=True)
+
 		# Create a test counterparty if it doesn't exist
 		if not frappe.db.exists("CounterParty", "Test Acme Corp"):
 			self.counterparty = frappe.get_doc({
@@ -25,6 +34,7 @@ class TestContract(FrappeTestCase):
 		# Cleanup documents created in tests
 		frappe.db.delete("Contract", {"counterparty_name": "Test Acme Corp"})
 		frappe.db.delete("CounterParty", {"organization": "Test Acme Corp"})
+		frappe.db.delete("Contract Content", {"contract_type": "Confidentiality & Non-Disclosure Contract"})
 
 	def test_contract_date_calculation(self):
 		contract = frappe.get_doc({
