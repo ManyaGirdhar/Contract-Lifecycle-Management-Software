@@ -29,98 +29,86 @@
                 </li>
             </ul>
 
-
             <p v-else class="text-gray-600 text-center">No contracts match your search.</p>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    name: "CounterpartyContracts",
-    resources: {
-        posts() {
-            return {
-                url: '/api/method/clm.api.fetch_contracts',
-                auto: true,
-                params: {
-                    user_email: this.userEmail,
-                    user_roles: this.userRoles
+    import { Button, frappeRequest } from "frappe-ui";
+
+    export default {
+        name: "CounterpartyContracts",
+
+        components: {
+            Button
+        },
+
+        resources: {
+            posts() {
+                return {
+                    url: '/api/method/clm.api.fetch_contracts',
+                    auto: false,
                 }
+            },
+        },
+
+        data() {
+            return {
+                contracts: [],
+                userEmail: null,
+                userRoles: [],
+                searchQuery: ""
+            };
+        },
+
+        async mounted() {
+            await this.getUserInfo();
+
+            this.$resources.posts.fetch({
+                user_email: this.userEmail,
+                user_roles: this.userRoles,
+            });
+        },
+
+        computed: {
+            filteredContracts() {
+                const contracts = this.$resources.posts?.data || [];
+                if (!this.searchQuery) return contracts;
+                const q = this.searchQuery.toLowerCase();
+                return contracts.filter(c => c.name.toLowerCase().includes(q));
             }
         },
-    },
 
-    data() {
-        return {
-            contracts: [],
-            userEmail: null,
-            userRoles: [],
-            searchQuery: ""
-        };
-    },
+        methods: {
+            async getUserInfo() {
+                try {
+                    const uid = await frappeRequest({
+                        url: "/api/method/frappe.auth.get_logged_user",
+                    });
 
-    async mounted() {
-        await this.getUserInfo();
-    },
+                    this.userEmail = uid;
 
-    computed: {
-        filteredContracts() {
-            const contracts = this.$resources.posts?.data || [];
-            if (!this.searchQuery) return contracts;
-            const q = this.searchQuery.toLowerCase();
-            return contracts.filter(c => c.name.toLowerCase().includes(q));
+                    const roles = await frappeRequest({
+                        url: "/api/method/frappe.core.doctype.user.user.get_roles",
+                        params: {
+                            uid,
+                        },
+                    });
+
+                    this.userRoles = roles || [];
+                } catch (error) {
+                    console.error("❌ Error fetching user info:", error);
+                }
+            },
+
+            goToContract(contractName) {
+                this.$router.push(`/contract/${contractName}`);
+            },
+
+            goToRequestForm() {
+                this.$router.push("/request-contract");
+            }
         }
-    },
-
-    methods: {
-        async getUserInfo() {
-            try {
-                // Get logged-in user's email
-                const response = await fetch("/api/method/frappe.auth.get_logged_user");
-                const { message: email } = await response.json();
-                this.userEmail = email;
-
-                // Get user's uid
-                const uidResponse = await fetch("/api/method/frappe.auth.get_logged_user");
-                const { message: uid } = await uidResponse.json();  // Ensure this returns a 'uid'
-
-                // Get roles via frappe.desk.permission.get_roles
-                const rolesRes = await fetch(`/api/method/frappe.core.doctype.user.user.get_roles?uid=${uid}`);
-                const rolesJson = await rolesRes.json();
-                this.userRoles = rolesJson.message || [];
-            } catch (error) {
-                console.error("❌ Error fetching user info:", error);
-            }
-        },
-
-
-
-        // get_data() {
-        //     console.log("SDfknsdkn")
-
-
-        //     let todo = createResource({
-        //         url: '/api/method/clm.api.fetch_contracts',
-        //         method: 'GET',
-        //         params: {
-        //             doctype: 'Contract',
-        //             user_email: 'fdlnsdn'
-        //         }
-        //     })
-        //     todo.fetch()
-        //     console.log(todo, "todo")
-        // }
-        // ,
-
-
-        goToContract(contractName) {
-            this.$router.push(`/contract/${contractName}`);
-        },
-
-        goToRequestForm() {
-        window.location.href = "https://three-korecent.frappe.cloud/request-contract";
-    }
-    }
-};
+    };
 </script>
