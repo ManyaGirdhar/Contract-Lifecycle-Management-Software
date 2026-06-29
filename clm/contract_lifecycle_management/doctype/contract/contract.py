@@ -16,29 +16,29 @@ from frappe.website.website_generator import WebsiteGenerator
 
 class Contract(WebsiteGenerator):
 
-	def before_save(doc):
-		if doc.contract_effective_date and doc.contract_duration:
-			doc.contract_end_date = add_months(doc.contract_effective_date, doc.contract_duration)
+	def before_save(self):
+		if self.contract_effective_date and self.contract_duration:
+			self.contract_end_date = add_months(self.contract_effective_date, self.contract_duration)
 
-		if doc.amount_to_receive and doc.tax is not None:
-			tax_amount = (doc.amount_to_receive * doc.tax) / 100
-			doc.total_amount = doc.amount_to_receive + tax_amount
+		if self.amount_to_receive and self.tax is not None:
+			tax_amount = (self.amount_to_receive * self.tax) / 100
+			self.total_amount = self.amount_to_receive + tax_amount
 		else:
-			doc.total_amount = doc.amount_to_receive or 0
+			self.total_amount = self.amount_to_receive or 0
 
-	def after_insert(doc):
-		doc.create_initial_version()
-		doc.create_user_with_role()
+	def after_insert(self):
+		self.create_initial_version()
+		self.create_user_with_role()
 
-		counterparty_doc = frappe.get_doc("CounterParty", doc.counterparty_name)
+		counterparty_doc = frappe.get_doc("CounterParty", self.counterparty_name)
 
     	# Collect emails from both child tables
-		legal_emails = [member.email for member in doc.legal_team if member.email]
-		signee_emails = [member.email for member in doc.signee if member.email]
+		legal_emails = [member.email for member in self.legal_team if member.email]
+		signee_emails = [member.email for member in self.signee if member.email]
 
 		# Append a single row for this contract
 		counterparty_doc.append("team_members", {
-			"contract_assigned": doc.name,
+			"contract_assigned": self.name,
 			"email": ", ".join(legal_emails) if legal_emails else None,
 			"signee_email": ", ".join(signee_emails) if signee_emails else None
 		})
@@ -104,18 +104,18 @@ class Contract(WebsiteGenerator):
 
 		frappe.db.set_value("Contract", self.name, "current_version", version.name)
 
-	def on_update(doc):
+	def on_update(self):
 		if frappe.flags.in_insert:
 			return
 		
-		previous_doc = doc.get_doc_before_save()
+		previous_doc = self.get_doc_before_save()
 		
 		if not previous_doc:
 			return  # No previous version to compare 
 			
 		previous_versions = frappe.get_all(
 			"Contract Version",
-			filters={"contract": doc.name},
+			filters={"contract": self.name},
 			fields=["name", "version_no", "current_version"],
 			order_by="CAST(version_no AS UNSIGNED) DESC", 
 			limit=1
@@ -126,12 +126,12 @@ class Contract(WebsiteGenerator):
 
 		changed_fields = []
 		if previous_doc:
-			for field in doc.meta.fields:
+			for field in self.meta.fields:
 				fieldname = field.fieldname
 				if not fieldname:
 					continue
 				old = previous_doc.get(fieldname)
-				new = doc.get(fieldname)
+				new = self.get(fieldname)
 
 				# Normalize date fields
 				if field.fieldtype in ["Date", "Datetime"]:
@@ -149,19 +149,19 @@ class Contract(WebsiteGenerator):
 
 
 		new_version = frappe.new_doc("Contract Version")
-		new_version.contract = doc.name
+		new_version.contract = self.name
 		new_version.version_no = new_version_no
-		new_version.effective_date = doc.contract_effective_date
-		new_version.status = doc.workflow_state if hasattr(doc, "workflow_state") else "Updated"
+		new_version.effective_date = self.contract_effective_date
+		new_version.status = self.workflow_state if hasattr(self, "workflow_state") else "Updated"
 		new_version.created_by = frappe.session.user
 		new_version.created_on = frappe.utils.now_datetime()
 		new_version.change_log = change_log
 		new_version.previous_version = latest_version.current_version if latest_version else "N/A"
-		new_version.current_version = doc.get_formatted("content") or "Updated content"
+		new_version.current_version = self.get_formatted("content") or "Updated content"
 
 		# Generate redlined contract content
 		previous_content = latest_version.current_version if latest_version else ""
-		current_content = doc.get_formatted("content") or "Updated content"
+		current_content = self.get_formatted("content") or "Updated content"
 
 		# Call the redline diff function directly
 		redlined_html = get_redlined_diff(previous_content, current_content)
@@ -170,7 +170,7 @@ class Contract(WebsiteGenerator):
 		new_version.redlined_contract = f"<div style='line-height: 1.8;'>{redlined_html}</div>"
 
 
-		frappe.db.set_value("Contract", doc.name, "current_version", doc.name + "-" + new_version_no)
+		frappe.db.set_value("Contract", self.name, "current_version", self.name + "-" + new_version_no)
 		new_version.insert(ignore_permissions=True)
 
 
@@ -226,7 +226,6 @@ def get_redlined_diff(prev_text, curr_text):
 	</div>
 	"""
 
-@frappe.whitelist()
 def update_expired_contracts():
 	today = nowdate()
 	
@@ -244,9 +243,10 @@ def update_expired_contracts():
 			doc = frappe.get_doc("Contract", contract.name)
 			doc.workflow_state = "Expired"  # Make sure this is a valid state in your workflow
 			doc.save()
-			frappe.db.commit()
 		except Exception as e:
 			frappe.log_error(f"Failed to update workflow for Contract {contract.name}: {str(e)}")
+
+	frappe.db.commit()
 
 @frappe.whitelist()
 def get_contract_template(contract_type):
@@ -255,45 +255,56 @@ def get_contract_template(contract_type):
 	# If using a Long Text field (in case of legacy data)
 	# Ensure it's not escaping HTML tags in case of legacy Long Text field
 	if template:
-		template = frappe.utils.cstr(template)  # Converts to string without escaping HTML
-	
+		template = frappe.utils.cstr(template)
 	return template
 
-# @frappe.whitelist()
-# def summarize_contract_text(name):
-# 	try:
+@frappe.whitelist()
+def compare_versions(version1, version2):
+	contract_name = frappe.db.get_value("Contract Version", version1, "contract")
+	if contract_name:
+		frappe.has_permission("Contract", "read", doc=contract_name, throw=True)
+	
+	v1_content = frappe.db.get_value("Contract Version", version1, "current_version") or ""
+	v2_content = frappe.db.get_value("Contract Version", version2, "current_version") or ""
+	return get_redlined_diff(v1_content, v2_content)
 
-# 		api_key = os.getenv("GEMINI_API_KEY")
-# 		if not api_key:
-# 			return "API key not found in environment."
+@frappe.whitelist()
+def summarize_contract_text(name):
+	try:
+		import google.generativeai as genai
+		api_key = frappe.db.get_single_value("Gemini Settings", "api_key")
+		if not api_key:
+			return _("Gemini API key is not configured in Gemini Settings.")
 
-# 		genai.configure(api_key=api_key)
-# 		doc = frappe.get_doc("Contract", name)
+		genai.configure(api_key=api_key)
+		doc = frappe.get_doc("Contract", name)
+		
+		# Validate user permission to read the contract
+		frappe.has_permission("Contract", "read", doc=doc, throw=True)
 
-# 		model = genai.GenerativeModel("gemini-1.5-pro-latest")
-# 		prompt = f"""
-# 				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
+		model = genai.GenerativeModel("gemini-1.5-pro-latest")
+		prompt = f"""
+				You are a contract summarization assistant. Provide a professional and concise summary of the following contract:
 
-# 				Contract Name: {doc.name}
-# 				Contract Type: {doc.contract_type}
-# 				Effective Date: {doc.contract_effective_date}
-# 				End Date: {doc.contract_end_date}
-# 				Duration: {doc.contract_duration} month(s)
-# 				Workflow State: {doc.workflow_state}
-# 				Amount to Receive: {doc.amount_to_receive}
-# 				Tax: {doc.tax}%
-# 				Total Amount: {doc.total_amount}
+				Contract Name: {doc.name}
+				Contract Type: {doc.contract_type}
+				Effective Date: {doc.contract_effective_date}
+				End Date: {doc.contract_end_date}
+				Duration: {doc.contract_duration} month(s)
+				Workflow State: {doc.workflow_state}
+				Amount to Receive: {doc.amount_to_receive}
+				Tax: {doc.tax}%
+				Total Amount: {doc.total_amount}
 
-# 				Contract Content:
-# 				{doc.content}
+				Contract Content:
+				{doc.content}
 
-# 				Focus on explaining the purpose of the contract, key dates, financial details, and any important clauses found in the content.
-# 				"""
-# 		response = model.generate_content(prompt)
+				Focus on explaining the purpose of the contract, key dates, financial details, and any important clauses found in the content.
+				"""
+		response = model.generate_content(prompt)
 
-# 		return response.text if hasattr(response, "text") else "Summary not available."
+		return response.text if hasattr(response, "text") else _("Summary not available.")
 
-# 	except Exception as e:
-# 		# Log the error in Frappe and return a message
-# 		frappe.log_error(frappe.get_traceback(), "Contract Summarization Error")
-# 		return f"Error occurred: {str(e)}"
+	except Exception as e:
+		frappe.log_error(frappe.get_traceback(), "Contract Summarization Error")
+		return f"Error occurred: {str(e)}"

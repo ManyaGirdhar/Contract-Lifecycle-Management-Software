@@ -9,6 +9,9 @@ class ContractRequest(Document):
 
 @frappe.whitelist()
 def create_contract_from_request(source_name):
+	# Validate document-level read permission
+	frappe.has_permission("Contract Request", "read", doc=source_name, throw=True)
+
 	# Get the ContractRequest document
 	contract_request = frappe.get_doc("Contract Request", source_name)
 
